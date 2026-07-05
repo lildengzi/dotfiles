@@ -20,6 +20,8 @@ A niri + DMS desktop configuration on CachyOS.
 
 [![Desktop preview](Docs/Pictures/desktop.png)](Docs/Pictures/show.mp4)
 
+<video src="Docs/Pictures/show.mp4" controls width="600"></video>
+
 ## Install
 
 ```bash
