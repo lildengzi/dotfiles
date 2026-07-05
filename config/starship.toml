@@ -1,0 +1,178 @@
+# Starship prompt: catppuccin-powerline preset
+# Powerlevel10k-style colored arrow segments for fish+kitty
+# https://starship.rs
+
+"$schema" = 'https://starship.rs/config-schema.json'
+
+format = """
+[](6)\
+$os\
+$username\
+[](bg:3 fg:6)\
+$directory\
+[](bg:5 fg:3)\
+$git_branch\
+$git_status\
+[](fg:5 bg:2)\
+$c\
+$rust\
+$golang\
+$nodejs\
+$bun\
+$php\
+$java\
+$kotlin\
+$haskell\
+$python\
+[](fg:2 bg:4)\
+$conda\
+[](fg:4 bg:1)\
+$time\
+[ ](fg:1)\
+$cmd_duration\
+$line_break\
+$character"""
+
+[os]
+disabled = false
+style = "bg:6 fg:0"
+
+[os.symbols]
+Windows = ""
+Ubuntu = "󰕈"
+SUSE = ""
+Raspbian = "󰐿"
+Mint = "󰣭"
+Macos = "󰀵"
+Manjaro = ""
+Linux = "󰌽"
+Gentoo = "󰣨"
+Fedora = "󰣛"
+Alpine = ""
+Amazon = ""
+Android = ""
+AOSC = ""
+Arch = ""
+CachyOS = ""
+Artix = "󰣇"
+CentOS = ""
+Debian = "󰣚"
+Redhat = "󱄛"
+RedHatEnterprise = "󱄛"
+
+[username]
+show_always = true
+style_user = "bg:6 fg:0"
+style_root = "bg:6 fg:0"
+format = '[  $user]($style)'
+
+[directory]
+style = "bg:3 fg:0"
+format = "[ $path ]($style)"
+truncation_length = 3
+truncation_symbol = "…/"
+
+[directory.substitutions]
+"Documents" = "󰈙 "
+"Downloads" = " "
+"Music" = "󰝚 "
+"Pictures" = " "
+"Developer" = "󰲋 "
+
+[git_branch]
+symbol = ""
+style = "bg:5"
+format = '[[ $symbol $branch ](fg:0 bg:5)]($style)'
+
+[git_status]
+style = "bg:5"
+format = '[[($all_status$ahead_behind )](fg:0 bg:5)]($style)'
+
+[nodejs]
+symbol = ""
+style = "bg:2"
+format = '[[ $symbol( $version) ](fg:0 bg:2)]($style)'
+
+[bun]
+symbol = ""
+style = "bg:2"
+format = '[[ $symbol( $version) ](fg:0 bg:2)]($style)'
+
+[c]
+symbol = " "
+style = "bg:2"
+format = '[[ $symbol( $version) ](fg:0 bg:2)]($style)'
+
+[rust]
+symbol = ""
+style = "bg:2"
+format = '[[ $symbol( $version) ](fg:0 bg:2)]($style)'
+
+[golang]
+symbol = ""
+style = "bg:2"
+format = '[[ $symbol( $version) ](fg:0 bg:2)]($style)'
+
+[php]
+symbol = ""
+style = "bg:2"
+format = '[[ $symbol( $version) ](fg:0 bg:2)]($style)'
+
+[java]
+symbol = " "
+style = "bg:2"
+format = '[[ $symbol( $version) ](fg:0 bg:2)]($style)'
+
+[kotlin]
+symbol = ""
+style = "bg:2"
+format = '[[ $symbol( $version) ](fg:0 bg:2)]($style)'
+
+[haskell]
+symbol = ""
+style = "bg:2"
+format = '[[ $symbol( $version) ](fg:0 bg:2)]($style)'
+
+[python]
+symbol = ""
+style = "bg:2"
+format = '[[ $symbol( $version)(\(#$virtualenv\)) ](fg:0 bg:2)]($style)'
+
+[docker_context]
+symbol = ""
+style = "bg:4"
+format = '[[ $symbol( $context) ](fg:0 bg:4)]($style)'
+
+[conda]
+symbol = "  "
+style = "fg:0 bg:4"
+format = '[$symbol$environment ]($style)'
+ignore_base = false
+
+[time]
+disabled = false
+time_format = "%R"
+style = "bg:1"
+format = '[[  $time ](fg:0 bg:1)]($style)'
+
+[line_break]
+disabled = false
+
+[character]
+disabled = false
+success_symbol = '[❯](bold fg:2)'
+error_symbol = '[❯](bold fg:1)'
+vimcmd_symbol = '[❮](bold fg:2)'
+vimcmd_replace_one_symbol = '[❮](bold fg:4)'
+vimcmd_replace_symbol = '[❮](bold fg:4)'
+vimcmd_visual_symbol = '[❮](bold fg:3)'
+
+[cmd_duration]
+show_milliseconds = true
+format = " in $duration "
+style = "bg:1"
+disabled = false
+show_notifications = false
+min_time_to_notify = 45000
+
+
