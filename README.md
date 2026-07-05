@@ -20,7 +20,7 @@ A niri + DMS desktop configuration on CachyOS.
 
 ![Desktop preview](Docs/Pictures/preview.gif)
 
-[⬇ Download full video with sound](Docs/Pictures/show.mp4)
+<video src="https://lildengzi.github.io/dotfiles/Docs/Pictures/show.mp4" controls width="600"></video>
 
 ## Install
 
