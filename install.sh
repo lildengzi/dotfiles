@@ -27,6 +27,6 @@ cp "$DOTFILES/config/fish/config.fish" ~/.config/fish/
 
 # wallpapers
 mkdir -p ~/Pictures/wallpaper
-cp "$DOTFILES/wallpapers/"*.png ~/Pictures/wallpaper/
+cp "$DOTFILES/wallpapers/"* ~/Pictures/wallpaper/
 
 echo "Done! Log out and back in to apply."
