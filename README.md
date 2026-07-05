@@ -18,7 +18,7 @@ A niri + DMS desktop configuration on CachyOS.
 
 ![terminal](Docs/Pictures/terminal_info.png)
 
-[Video preview](Docs/Pictures/show.mp4)
+[![Desktop preview](Docs/Pictures/desktop.png)](Docs/Pictures/show.mp4)
 
 ## Install
 
