@@ -74,8 +74,6 @@ mkdir -p ~/.config/kitty
 cat > ~/.config/kitty/kitty.conf << 'KITTYEOF'
 font_family FantasqueSansM Nerd Font Mono
 font_size 14.0
-background_opacity 0.9
-window_padding_width 12
 KITTYEOF
 pass "Kitty configured"
 
