@@ -10,6 +10,7 @@ A niri + DMS desktop configuration on CachyOS.
 |-----------|--------|
 | **WM** | niri 26.04 with Material You shell (DMS) |
 | **Terminal** | Kitty 0.47 with FantasqueSansM Nerd Font |
+| **Editor** | Neovim with LazyVim, catppuccin, LSP (rust-analyzer, clangd, pyright, ruff), DAP, treesitter, rainbow-delimiters, indent-blankline |
 | **Prompt** | Starship powerline-style with OS detection |
 | **Shell** | Fish with fastfetch alias |
 | **Wallpapers** | 20 curated wallpapers |
@@ -37,4 +38,5 @@ Restart your session after installation.
 - Requires niri Wayland compositor and DMS
 - PipeWire audio config and ananicy rules are not included (machine-specific)
 - Proxy configuration is not included
+- Neovim config uses lazy.nvim and will auto-install all plugins on first launch
 - Built on CachyOS, but should work on any Arch-based distro

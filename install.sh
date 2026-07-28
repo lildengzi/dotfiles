@@ -21,6 +21,10 @@ cp "$DOTFILES/config/kitty/kitty.conf" ~/.config/kitty/
 # starship
 cp "$DOTFILES/config/starship.toml" ~/.config/
 
+# nvim
+mkdir -p ~/.config/nvim
+cp -r "$DOTFILES/config/nvim/." ~/.config/nvim/
+
 # fish
 mkdir -p ~/.config/fish
 cp "$DOTFILES/config/fish/config.fish" ~/.config/fish/
