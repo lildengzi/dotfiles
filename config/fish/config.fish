@@ -3,23 +3,76 @@ if test -f /usr/share/cachyos-fish-config/cachyos-config.fish
 end
 
 # =====================
-# Default editor
+# Environment profile
 # =====================
 set -gx EDITOR nvim
+set -gx DISTROBOX_DRIVER podman
+set -gx DISTROBOX_SANDBOX_DIR ~/sandbox
 
-# =====================
-# TTY detection: switch to ASCII-only starship config
-# =====================
-if test "$TERM" = linux
-    set -gx STARSHIP_CONFIG ~/.config/starship.tty.toml
-else
-    # 清除从父进程（TTY → GUI）继承来的 tty 配置
-    set -e STARSHIP_CONFIG
+function __is_portable_shell
+    test "$TERM" = linux
+    or set -q SSH_CONNECTION
+    or set -q SSH_TTY
+    or set -q container
+    or test -f /.dockerenv
+end
+
+function __has_host_path
+    test -d /opt/cuda
+    and test -d ~/.config/DankMaterialShell
 end
 
 # =====================
-# Starship: colorful powerline prompt (p10k-style)
+# Host-only environment
+# Avoid leaking desktop/GPU assumptions into SSH and containers.
 # =====================
+if not __is_portable_shell
+    if __has_host_path
+        set -gx CUDA_HOME /opt/cuda
+        fish_add_path /opt/cuda/bin
+        fish_add_path /opt/cuda/lib64
+        if set -q LD_LIBRARY_PATH
+            if not contains -- /opt/cuda/lib64 $LD_LIBRARY_PATH
+                set -gx LD_LIBRARY_PATH /opt/cuda/lib64 $LD_LIBRARY_PATH
+            end
+        else
+            set -gx LD_LIBRARY_PATH /opt/cuda/lib64
+        end
+    end
+else
+    set -e CUDA_HOME
+    if set -q LD_LIBRARY_PATH
+        set -l clean_ld_library_path
+        for item in $LD_LIBRARY_PATH
+            if test "$item" != /opt/cuda/lib64
+                set clean_ld_library_path $clean_ld_library_path $item
+            end
+        end
+        if test (count $clean_ld_library_path) -gt 0
+            set -gx LD_LIBRARY_PATH $clean_ld_library_path
+        else
+            set -e LD_LIBRARY_PATH
+        end
+    end
+end
+
+# =====================
+# Prompt profile
+# - Host GUI: colorful powerline prompt
+# - TTY/SSH/container: conservative ASCII-compatible prompt
+# =====================
+if __is_portable_shell
+    if test -f ~/.config/starship.tty.toml
+        set -gx STARSHIP_CONFIG ~/.config/starship.tty.toml
+    end
+    if test "$TERM" = xterm-kitty
+        set -gx TERM xterm-256color
+    end
+else
+    # Clear inherited portable config when returning to GUI terminals.
+    set -e STARSHIP_CONFIG
+end
+
 if command -q starship
     starship init fish | source
 end
@@ -53,8 +106,13 @@ for cmd in fastfetch
     end
 end
 
-function fish_greeting
-    XDG_CURRENT_DESKTOP="DankMaterialShell" fetch --logo-position top
+if not __is_portable_shell
+    function fish_greeting
+        XDG_CURRENT_DESKTOP="DankMaterialShell" fetch --logo-position top
+    end
+else
+    function fish_greeting
+    end
 end
 
 # =====================
@@ -68,7 +126,13 @@ function distrobox
         set -l container_name $argv[2]
         set -l enter_args $argv[3..-1]
 
-        set -l enter_output (command distrobox enter $container_name $enter_args 2>&1)
+        set -l final_args $enter_args
+
+        if test (count $final_args) -eq 0
+            set final_args -- bash -lc 'cd "$HOME/sandbox" 2>/dev/null || cd "$HOME"; exec bash -l'
+        end
+
+        set -l enter_output (command distrobox enter $container_name $final_args 2>&1)
         set -l enter_status $status
 
         if test $enter_status -eq 0
@@ -79,12 +143,12 @@ function distrobox
         set -l enter_text (string join \n -- $enter_output)
 
         if string match -rq 'unable to find user .*no matching entries in passwd file' -- $enter_text
-            command distrobox enter --root $container_name $enter_args
+            command distrobox enter --root $container_name $final_args
             return $status
         end
 
         if string match -rq 'open /dev/pts/ptmx: no such file or directory' -- $enter_text
-            command distrobox enter --no-tty $container_name $enter_args
+            command distrobox enter --no-tty $container_name $final_args
             return $status
         end
 
@@ -95,4 +159,9 @@ function distrobox
     command distrobox $argv
 end
 
-alias fastfetch "fastfetch -s title:-:os:host:kernel:uptime:shell:de:wm:terminal:terminalfont:cpu:gpu:memory:display:locale:break:break:break:break:break"
+abbr -a ff fastfetch
+
+# alias fastfetch "fastfetch -s title:-:os:host:kernel:uptime:shell:de:wm:terminal:terminalfont:cpu:gpu:memory:display:locale:break:break:break:break:break"
+
+# Steam XWayland compatibility
+alias steam="env STEAM_FORCE_WAYLAND=0 /usr/bin/steam"

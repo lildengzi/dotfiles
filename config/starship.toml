@@ -5,6 +5,7 @@
 "$schema" = 'https://starship.rs/config-schema.json'
 
 format = """
+\n\
 [](6)\
 $os\
 $username\
@@ -173,6 +174,7 @@ format = " in $duration "
 style = "bg:1"
 disabled = false
 show_notifications = false
+scan_timeout = 100
 min_time_to_notify = 45000
 
 
