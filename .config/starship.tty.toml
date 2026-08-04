@@ -1,0 +1,53 @@
+# Starship TTY preset — pure ASCII, no Nerd Font
+# For Linux console and terminals without patched fonts
+# https://starship.rs
+
+format = """
+$username\
+$hostname\
+$directory\
+$git_branch\
+$git_status\
+$fill\
+$time\
+$line_break\
+$character"""
+
+[directory]
+truncation_length = 3
+truncation_symbol = "…/"
+style = "bold"
+
+[git_branch]
+format = "[$symbol$branch]($style)"
+symbol = "git:"
+style = "underline"
+
+[git_status]
+format = "[($all_status$ahead_behind)]($style)"
+style = "dimmed"
+
+[character]
+success_symbol = "[>](bold green)"
+error_symbol = "[>](bold red)"
+vimcmd_symbol = "[<](bold yellow)"
+
+[time]
+disabled = false
+format = "[$time]($style)"
+style = "dimmed"
+time_format = "%H:%M"
+
+[fill]
+symbol = " "
+
+[hostname]
+ssh_only = false
+format = "@[$hostname]($style) "
+style = "dimmed"
+
+[username]
+show_always = true
+style_user = "bold"
+style_root = "bold red"
+format = "[$user]($style)"

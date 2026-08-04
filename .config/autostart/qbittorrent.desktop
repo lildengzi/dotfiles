@@ -1,0 +1,7 @@
+[Desktop Entry]
+Hidden=true
+Type=Application
+Name=qBittorrent
+Exec=qbittorrent --no-splash
+X-GNOME-Autostart-enabled=true
+NoDisplay=true

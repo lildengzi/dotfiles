@@ -18,5 +18,5 @@ esac
 
 backup_config "$HOME/.config/yazi"
 mkdir -p "$HOME/.config/yazi"
-cp -r "$DOTFILES/config/yazi/." "$HOME/.config/yazi/"
+cp -r "$DOTFILES/.config/yazi/." "$HOME/.config/yazi/"
 echo "  完成！"

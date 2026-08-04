@@ -18,5 +18,5 @@ esac
 
 backup_config "$HOME/.config/nvim"
 mkdir -p "$HOME/.config/nvim"
-cp -r "$DOTFILES/config/nvim/." "$HOME/.config/nvim/"
+cp -r "$DOTFILES/.config/nvim/." "$HOME/.config/nvim/"
 echo "  完成！打开 nvim 自动安装插件。"

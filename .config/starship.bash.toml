@@ -1,0 +1,70 @@
+# Bash-only Starship prompt inspired by the DMS bar style.
+# Fish keeps using ~/.config/starship.toml.
+
+add_newline = false
+format = "[┌─](muted)$os$username$directory$fill$character$time$line_break[└─](muted)"
+
+palette = "bash_dms"
+
+[palettes.bash_dms]
+right_bg = "#3a3733"
+right_fg = "#c5b8a6"
+ok = "#a7c957"
+err = "#e06c75"
+muted = "#6f7773"
+
+[os]
+disabled = false
+format = "[](fg:6)[ $symbol](bg:6 fg:0)"
+
+[os.symbols]
+Arch = ""
+CachyOS = ""
+Linux = "󰌽"
+Debian = "󰣚"
+Fedora = "󰣛"
+Ubuntu = "󰕈"
+Alpine = ""
+
+[username]
+show_always = true
+format = "[ $user ](bg:6 fg:0)[](fg:6 bg:3)"
+style_user = "bg:6 fg:0"
+style_root = "bg:6 fg:0"
+
+[directory]
+format = "[ $read_only$truncation_symbol$path ](bg:3 fg:0)[](fg:3)"
+home_symbol = "~"
+truncation_length = 1
+truncate_to_repo = false
+read_only = " "
+
+[fill]
+symbol = "·"
+style = "muted"
+
+[character]
+format = "$symbol"
+success_symbol = "[](fg:right_bg)[ ✓](bg:right_bg fg:ok)"
+error_symbol = "[](fg:right_bg)[ ✗](bg:right_bg fg:err)"
+vimcmd_symbol = "[](fg:right_bg)[ ❮](bg:right_bg fg:ok)"
+vimcmd_replace_one_symbol = "[](fg:right_bg)[ ❮](bg:right_bg fg:err)"
+vimcmd_replace_symbol = "[](fg:right_bg)[ ❮](bg:right_bg fg:err)"
+vimcmd_visual_symbol = "[](fg:right_bg)[ ❮](bg:right_bg fg:ok)"
+
+
+[status]
+disabled = true
+format = "[](fg:right_bg)[ $symbol$status](bg:right_bg fg:err)"
+symbol = "✗ "
+success_symbol = ""
+not_executable_symbol = "cmd "
+not_found_symbol = "404 "
+sigint_symbol = "INT "
+signal_symbol = "SIG "
+map_symbol = true
+
+[time]
+disabled = false
+time_format = "%H:%M"
+format = "[ $time ](bg:right_bg fg:right_fg)[](fg:right_bg)"

@@ -1,0 +1,110 @@
+{
+  "screenshotTool": {
+    "enabled": false
+  },
+  "dankKDEConnect": {
+    "enabled": false
+  },
+  "liveLyrics": {
+    "enabled": true,
+    "musixmatchToken": "",
+    "source4": "none",
+    "source3": "none",
+    "source2": "musixmatch",
+    "source1": "lrclib",
+    "cachingEnabled": true
+  },
+  "niriFps": {
+    "enabled": false
+  },
+  "niriFpsDaemon": {
+    "enabled": false
+  },
+  "dockerManager": {
+    "enabled": false,
+    "groupByCompose": false
+  },
+  "linuxWallpaperEngine": {
+    "enabled": false,
+    "monitorPlaylists": {},
+    "monitorScenes": {
+      "HDMI-A-1": "1289832516"
+    },
+    "sceneSettings": {
+      "1221025074": {
+        "scaling": "default"
+      },
+      "1289832516": {
+        "fps": 60
+      },
+      "2838111367": {
+        "fps": 29
+      },
+      "2852706183": {
+        "fps": 60,
+        "silent": true,
+        "scaling": "default"
+      },
+      "2905017768": {
+        "noAutoMute": false,
+        "scaling": "stretch",
+        "noAudioProcessing": false,
+        "disableMouse": false
+      },
+      "3147346398": {
+        "fps": 60
+      }
+    },
+    "playlistIntervalMinutes": 1,
+    "playlistShuffle": false,
+    "generateStaticWallpaper": true
+  },
+  "dmsfilemanager": {
+    "enabled": true
+  },
+  "stockManager": {
+    "enabled": true
+  },
+  "bongoCat": {
+    "enabled": false,
+    "pawHoldTime": 0,
+    "soundEnabled": false,
+    "showMetrics": false,
+    "catYOffset": 5,
+    "waitingTimeout": 3,
+    "catSizePercent": 125,
+    "catColorMode": "classic",
+    "enableBlinking": true
+  },
+  "desktopCommand": {
+    "enabled": false
+  },
+  "screenkey": {
+    "enabled": false,
+    "showNormalKeys": true,
+    "fadeTimeout": 1500,
+    "showShortcuts": true
+  },
+  "dankLauncherKeys": {
+    "enabled": false,
+    "noTrigger": true
+  },
+  "cavaVisualizer": {
+    "enabled": true
+  },
+  "wallpaperCarousel": {
+    "enabled": true,
+    "overlayOpacity": 80,
+    "wallpaperDirectory": "~/Pictures/wallpaper",
+    "expandSelected": "false"
+  },
+  "appShortcut": {
+    "enabled": false
+  },
+  "fullscreenPowerMenu": {
+    "enabled": false
+  },
+  "quickCapture": {
+    "enabled": true
+  }
+}

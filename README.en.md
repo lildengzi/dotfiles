@@ -4,19 +4,21 @@
 
 ![desktop](Docs/Pictures/desktop.png)
 
-Personal dotfiles on CachyOS — niri + DMS + Kitty + fish + Neovim.
+Personal dotfiles on Linux (Arch-based) — niri + DMS + Kitty + fish + Neovim.
+The repo's `.config/` is the actual `~/.config` tree in use (with proxy/secrets removed).
 
 ## What's included
 
 | Component | Config |
 |-----------|--------|
 | **WM** | niri with Material You shell (DMS) |
-| **Terminal** | Kitty with FantasqueSansM Nerd Font |
-| **Editor** | Neovim with LazyVim, catppuccin, LSP (rust-analyzer, pyright, ruff), DAP, treesitter, rainbow-delimiters, indent-blankline |
-| **File manager** | Yazi terminal file manager, editing via nvim |
-| **Code editor** | VSCode with catppuccin theme + vscode-icons, autosave |
-| **Prompt** | Starship powerline-style with OS detection |
+| **Terminal** | Kitty (dank theme), FantasqueSansM Nerd Font |
+| **Editor** | Neovim + LazyVim, catppuccin, LSP (rust-analyzer, pyright, ruff), DAP, treesitter, rainbow-delimiters, indent-blankline |
+| **File manager** | Yazi terminal file manager, editing via nvim, in-terminal video preview |
+| **Code editor** | VSCode + Zed, catppuccin theme, autosave |
+| **Prompt** | Starship (GUI / TTY / bash presets) |
 | **Shell** | Fish with fastfetch alias |
+| **Desktop tools** | fastfetch, mpv, btop, cava, MangoHud, GTK/fontconfig, env & autostart |
 | **Wallpapers** | 33 curated wallpapers |
 
 ## Screenshots
@@ -43,47 +45,72 @@ Personal dotfiles on CachyOS — niri + DMS + Kitty + fish + Neovim.
 
 ## Quick start
 
-```bash
+One-liner (downloads and launches the installer):
+
+```sh
+curl -fsSL https://raw.githubusercontent.com/lildengzi/dotfiles/master/scripts/bootstrap.sh | sh
+```
+
+Or clone locally:
+
+```sh
 git clone https://github.com/lildengzi/dotfiles
 cd dotfiles
-bash scripts/install.sh
+sh scripts/install.sh
 ```
 
 Choose from:
-1. **Full desktop** — niri + DMS + Kitty + nvim + yazi + fish + starship + vscode + font
+1. **Full desktop** — niri + DMS + Kitty + nvim + yazi + fish + starship + vscode + font + all configs
 2. **Terminal + editor only** — Kitty + nvim + yazi + starship + font
 3. **Pick your own** — select individual components
+4. **Config only** — copy the whole `.config/`, install nothing
 
-Each component can also be installed individually:
+Each component can also be installed individually (all scripts are POSIX sh, no bash needed):
 
-```bash
-bash scripts/install-font.sh    # FantasqueSansM Nerd Font
-bash scripts/install-kitty.sh   # Kitty terminal
-bash scripts/install-nvim.sh    # Neovim (LazyVim)
-bash scripts/install-yazi.sh    # Yazi file manager
-bash scripts/install-niri.sh    # niri WM
-bash scripts/install-fish.sh    # Fish shell
-bash scripts/install-starship.sh # Starship prompt
-bash scripts/install-vscode.sh  # VSCode config (install VSCode itself manually)
+```sh
+sh scripts/install-config.sh   # copy the whole .config (no software)
+sh scripts/install-font.sh    # FantasqueSansM Nerd Font
+sh scripts/install-kitty.sh   # Kitty terminal
+sh scripts/install-nvim.sh    # Neovim (LazyVim)
+sh scripts/install-yazi.sh    # Yazi file manager
+sh scripts/install-niri.sh    # niri WM
+sh scripts/install-fish.sh    # Fish shell
+sh scripts/install-starship.sh # Starship prompt
+sh scripts/install-vscode.sh  # VSCode config (install VSCode itself manually)
 ```
 
-Scripts auto-detect your distro (Arch, Fedora, Debian, openSUSE),
-back up existing configs, and install missing dependencies.
+Scripts auto-detect your distro (Arch, Fedora, Debian, openSUSE) and pick the right package manager,
+back up existing configs, and install missing dependencies (non-Arch not fully guaranteed).
+
+## What makes this different
+
+- **POSIX sh install scripts** — every `scripts/*.sh` is pure sh, no bash dependency, runnable on any distro
+- **fish `fetch` fallback** — `ff` = `fastfetch`; if fastfetch is missing, the `fetch` command degrades gracefully instead of failing distrobox/SSH startup
+- **SSH / container auto-detection** — fish switches to a conservative ASCII prompt over SSH/TTY/containers, so desktop/GPU assumptions don't leak into remote environments
+- **CUDA path injection** — `CUDA_HOME` is only set on the host when `/opt/cuda` + DankMaterialShell are present; cleaned up automatically in SSH/containers
+- **distrobox stability fixes** — retries with `--root` when the container lacks a passwd entry, and with `--no-tty` on tty allocation failure
+- **In-terminal video preview in Yazi** — `mpv --vo=kitty` previews videos right in the file manager, no separate window
+- **Kitty muted theme** — bundled `dank-tabs.conf` / `dank-theme.conf` (slanted powerline tabs + grey-purple palette), with CJK font fallback
+- **niri recording shortcuts** — `Mod+Alt+R` start / `Mod+Alt+Shift+R` stop recording
 
 ## Manual copy
 
-If you only want the config files without running scripts:
+The repo's `.config/` is a ready-to-use `~/.config` tree — copy it straight over:
 
-```bash
+```sh
+git clone --depth 1 https://github.com/lildengzi/dotfiles
+cd dotfiles
+cp -r .config/* ~/.config/   # merge into your ~/.config
+nvim  # auto-installs plugins
+```
+
+Want only some components? Use sparse checkout:
+
+```sh
 git clone --depth 1 --filter=blob:none --sparse https://github.com/lildengzi/dotfiles
 cd dotfiles
-git sparse-checkout set config/kitty config/nvim config/yazi config/vscode config/starship.toml config/fish
-cp -r config/kitty ~/.config/kitty
-cp -r config/nvim ~/.config/nvim
-cp -r config/yazi ~/.config/yazi
-mkdir -p ~/.config/Code/User && cp config/vscode/settings.json ~/.config/Code/User/
-cp config/starship.toml ~/.config/
-cp -r config/fish ~/.config/fish
+git sparse-checkout set .config/kitty .config/nvim .config/yazi .config/starship.toml .config/fish
+cp -r .config/* ~/.config/
 nvim  # auto-installs plugins
 ```
 
@@ -101,7 +128,7 @@ nvim  # auto-installs plugins
 
 - niri/DMS are optional — the terminal + editor work on any WM
 - PipeWire audio config and ananicy rules are not included (machine-specific)
-- Proxy configuration is not included
+- Proxy-related configs are not included (v2ray / sing-box / proxyd / nas-conn etc.)
+- Privacy-sensitive items removed: musixmatch token, VPN/NAS server addresses, clangd machine paths
 - Neovim config uses lazy.nvim and will auto-install all plugins on first launch
-- VSCode config has machine-specific clangd path removed; add it yourself if needed
-- Built on CachyOS, but should work on any distro (scripts auto-detect package manager)
+- Built on Linux (Arch-based); scripts auto-detect your distro and package manager, non-Arch not fully guaranteed

@@ -3,7 +3,7 @@ set -e
 SCRIPT_DIR="$(dirname "$0")"
 
 echo "================================"
-echo "  lildengzi's dotfiles 安装器"
+echo "      dotfiles 安装器"
 echo "================================"
 echo ""
 echo "你想安装什么？"
@@ -11,10 +11,11 @@ echo ""
 echo "  1) 全部安装（完整桌面环境）"
 echo "  2) 仅终端 + 编辑器"
 echo "  3) 自定义选择"
+echo "  4) 仅复制全部配置（不装软件）"
 echo "  0) 退出"
 echo ""
 
-printf "选择 [0-3]: "
+printf "选择 [0-4]: "
 read choice
 
 case "$choice" in
@@ -27,6 +28,7 @@ case "$choice" in
         sh "$SCRIPT_DIR/install-fish.sh"
         sh "$SCRIPT_DIR/install-starship.sh"
         sh "$SCRIPT_DIR/install-vscode.sh"
+        sh "$SCRIPT_DIR/install-config.sh"
         ;;
     2)
         sh "$SCRIPT_DIR/install-font.sh"
@@ -41,7 +43,7 @@ case "$choice" in
     3)
         echo ""
         echo "可选的组件（y/n）:"
-        for c in font kitty nvim yazi niri fish starship vscode; do
+        for c in font kitty nvim yazi niri fish starship vscode config; do
             printf "  安装 %s ? [y/N] " "$c"
             read yn
             case "$yn" in
@@ -55,12 +57,16 @@ case "$choice" in
                         fish)    sh "$SCRIPT_DIR/install-fish.sh" ;;
                         starship) sh "$SCRIPT_DIR/install-starship.sh" ;;
                         vscode)  sh "$SCRIPT_DIR/install-vscode.sh" ;;
+                        config)  sh "$SCRIPT_DIR/install-config.sh" ;;
                     esac
                     ;;
                 *)
                     ;;
             esac
         done
+        ;;
+    4)
+        sh "$SCRIPT_DIR/install-config.sh"
         ;;
     0)
         exit 0

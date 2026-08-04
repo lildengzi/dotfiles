@@ -1,0 +1,12 @@
+{
+    "id": "liveLyrics",
+    "name": "Live Lyrics",
+    "description": "Display synced lyrics on your DankBar",
+    "version": "1.0.0",
+    "author": "noahpolimon",
+    "icon": "lyrics",
+    "type": "widget",
+    "component": "./LiveLyrics.qml",
+    "settings": "./LiveLyricsSettings.qml",
+    "permissions": ["settings_read", "settings_write", "process", "network"]
+}
