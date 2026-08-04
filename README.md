@@ -82,6 +82,26 @@ sh scripts/install-vscode.sh  # VSCode 配置（本体请自行安装）
 安装脚本会自动检测你的发行版（Arch、Fedora、Debian、openSUSE 等）并选择合适的包管理器，
 备份已有配置，并安装缺少的依赖（非 Arch 系不保证完全可用）。
 
+## 灾难恢复
+
+电脑重装/系统炸了，一键恢复所有软件包（`packages/pkglist.txt` 是显式安装包的快照，含 AUR 包）：
+
+```sh
+git clone https://github.com/lildengzi/dotfiles
+cd dotfiles
+paru -S --needed $(cat packages/pkglist.txt)
+```
+
+> 注意：清单含 cachyos 仓库的包（如 `linux-cachyos`）。
+> 若重装的是纯净 Arch，先安装并启用 [cachyos-mirrorlist](https://github.com/CachyOS/CachyOS-PKGBUILDS/tree/master/cachyos-mirrorlist)，
+> 或用 Arch 内核替代 `linux-cachyos`。
+
+更新清单（装新包后）：
+
+```sh
+pacman -Qqe > packages/pkglist.txt
+```
+
 ## 与众不同之处
 
 - **POSIX sh 安装脚本** — 所有 `scripts/*.sh` 都是纯 sh，不依赖 bash，任何发行版都能直接 `sh` 运行

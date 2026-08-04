@@ -82,6 +82,27 @@ sh scripts/install-vscode.sh  # VSCode config (install VSCode itself manually)
 Scripts auto-detect your distro (Arch, Fedora, Debian, openSUSE) and pick the right package manager,
 back up existing configs, and install missing dependencies (non-Arch not fully guaranteed).
 
+## Disaster recovery
+
+Reinstall lost your machine? Restore every software package from `packages/pkglist.txt`
+(a snapshot of explicitly installed packages, including AUR):
+
+```sh
+git clone https://github.com/lildengzi/dotfiles
+cd dotfiles
+paru -S --needed $(cat packages/pkglist.txt)
+```
+
+> Note: the snapshot includes CachyOS repo packages (e.g. `linux-cachyos`).
+> On a clean Arch install, install and enable [cachyos-mirrorlist](https://github.com/CachyOS/CachyOS-PKGBUILDS/tree/master/cachyos-mirrorlist)
+> first, or replace `linux-cachyos` with the stock Arch kernel.
+
+To update the snapshot after installing new packages:
+
+```sh
+pacman -Qqe > packages/pkglist.txt
+```
+
 ## What makes this different
 
 - **POSIX sh install scripts** — every `scripts/*.sh` is pure sh, no bash dependency, runnable on any distro
