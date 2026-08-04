@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 set -e
 SCRIPT_DIR="$(dirname "$0")"
 
@@ -14,43 +14,52 @@ echo "  3) 自定义选择"
 echo "  0) 退出"
 echo ""
 
-read -rp "选择 [0-3]: " choice
+printf "选择 [0-3]: "
+read choice
 
 case "$choice" in
     1)
-        bash "$SCRIPT_DIR/install-font.sh"
-        bash "$SCRIPT_DIR/install-kitty.sh"
-        bash "$SCRIPT_DIR/install-nvim.sh"
-        bash "$SCRIPT_DIR/install-niri.sh"
-        bash "$SCRIPT_DIR/install-fish.sh"
-        bash "$SCRIPT_DIR/install-starship.sh"
+        sh "$SCRIPT_DIR/install-font.sh"
+        sh "$SCRIPT_DIR/install-kitty.sh"
+        sh "$SCRIPT_DIR/install-nvim.sh"
+        sh "$SCRIPT_DIR/install-yazi.sh"
+        sh "$SCRIPT_DIR/install-niri.sh"
+        sh "$SCRIPT_DIR/install-fish.sh"
+        sh "$SCRIPT_DIR/install-starship.sh"
+        sh "$SCRIPT_DIR/install-vscode.sh"
         ;;
     2)
-        bash "$SCRIPT_DIR/install-font.sh"
-        bash "$SCRIPT_DIR/install-kitty.sh"
-        bash "$SCRIPT_DIR/install-nvim.sh"
-        bash "$SCRIPT_DIR/install-starship.sh"
+        sh "$SCRIPT_DIR/install-font.sh"
+        sh "$SCRIPT_DIR/install-kitty.sh"
+        sh "$SCRIPT_DIR/install-nvim.sh"
+        sh "$SCRIPT_DIR/install-yazi.sh"
+        sh "$SCRIPT_DIR/install-starship.sh"
         echo ""
-        echo "提示：Kitty + nvim + starship 已安装。"
+        echo "提示：Kitty + nvim + yazi + starship 已安装。"
         echo "如果你用其他终端/shell，手动复制 config 即可。"
         ;;
     3)
         echo ""
         echo "可选的组件（y/n）:"
-        components="font kitty nvim niri fish starship"
-        declare -A map=(
-            [font]="install-font.sh"
-            [kitty]="install-kitty.sh"
-            [nvim]="install-nvim.sh"
-            [niri]="install-niri.sh"
-            [fish]="install-fish.sh"
-            [starship]="install-starship.sh"
-        )
-        for c in $components; do
-            read -rp "  安装 $c ? [y/N] " yn
-            if [[ "$yn" =~ ^[yY] ]]; then
-                bash "$SCRIPT_DIR/${map[$c]}"
-            fi
+        for c in font kitty nvim yazi niri fish starship vscode; do
+            printf "  安装 %s ? [y/N] " "$c"
+            read yn
+            case "$yn" in
+                y|Y)
+                    case "$c" in
+                        font)    sh "$SCRIPT_DIR/install-font.sh" ;;
+                        kitty)   sh "$SCRIPT_DIR/install-kitty.sh" ;;
+                        nvim)    sh "$SCRIPT_DIR/install-nvim.sh" ;;
+                        yazi)    sh "$SCRIPT_DIR/install-yazi.sh" ;;
+                        niri)    sh "$SCRIPT_DIR/install-niri.sh" ;;
+                        fish)    sh "$SCRIPT_DIR/install-fish.sh" ;;
+                        starship) sh "$SCRIPT_DIR/install-starship.sh" ;;
+                        vscode)  sh "$SCRIPT_DIR/install-vscode.sh" ;;
+                    esac
+                    ;;
+                *)
+                    ;;
+            esac
         done
         ;;
     0)

@@ -4,7 +4,6 @@ return {
     opts = {
       servers = {
         rust_analyzer = {},
-        clangd = {},
         pyright = {},
         ruff = { init = { settings = {} } },
       },
@@ -15,7 +14,6 @@ return {
     opts = {
       ensure_installed = {
         "rust-analyzer",
-        "clangd",
         "pyright",
         "ruff",
       },

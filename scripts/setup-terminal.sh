@@ -1,11 +1,11 @@
-#!/bin/bash
+#!/bin/sh
 # Ubuntu Terminal Setup — Kitty + Starship + FantasqueSansM Nerd Font
-# Usage: bash setup-terminal.sh
+# Usage: sh setup-terminal.sh
 set -e
 
 RED='\033[0;31m'; GREEN='\033[0;32m'; NC='\033[0m'
-pass() { echo -e "${GREEN}✓${NC} $1"; }
-fail() { echo -e "${RED}✗${NC} $1"; exit 1; }
+pass() { printf "${GREEN}\342\234\223${NC} %s\n" "$1"; }
+fail() { printf "${RED}\342\234\227${NC} %s\n" "$1"; exit 1; }
 
 echo "=============================="
 echo " Terminal Environment Setup"
@@ -42,7 +42,7 @@ fi
 # ── 4. 安装 Kitty ──
 echo ""
 echo "==> Installing Kitty terminal..."
-if ! command -v kitty &>/dev/null; then
+if ! command -v kitty >/dev/null 2>&1; then
     curl -fsSL https://sw.kovidgoyal.net/kitty/installer.sh | sh /dev/stdin 2>/dev/null
     mkdir -p ~/.local/bin
     ln -sf ~/.local/kitty.app/bin/kitty ~/.local/bin/kitty
@@ -60,7 +60,7 @@ fi
 # ── 5. 安装 Starship ──
 echo ""
 echo "==> Installing Starship prompt..."
-if ! command -v starship &>/dev/null; then
+if ! command -v starship >/dev/null 2>&1; then
     curl -sS https://starship.rs/install.sh | sh -s -- -y 2>/dev/null
     pass "Starship installed"
 else
@@ -92,7 +92,7 @@ fi
 
 echo ""
 echo "=============================="
-echo -e "${GREEN} All done!${NC}"
+printf "${GREEN} All done!${NC}\n"
 echo "=============================="
 echo ""
 echo "Next steps:"

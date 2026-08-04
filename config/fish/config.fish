@@ -165,3 +165,7 @@ abbr -a ff fastfetch
 
 # Steam XWayland compatibility
 alias steam="env STEAM_FORCE_WAYLAND=0 /usr/bin/steam"
+
+alias vi nvim
+alias vim nvim
+alias zed zeditor

@@ -5,9 +5,10 @@ output "eDP-1" {
     position x=0 y=0
 }
 
-output "HDMI-A-1" {
-    mode "1920x1080@120.000"
-    scale 1
-    position x=1920 y=0
-}
-
+// Rescue mode: avoid forcing an external HDMI output during login.
+// On many hybrid laptops, HDMI is wired to the NVIDIA dGPU.
+// output "HDMI-A-1" {
+//     mode "1920x1080@120.000"
+//     scale 1
+//     position x=1920 y=0
+// }

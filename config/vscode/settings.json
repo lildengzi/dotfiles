@@ -1,0 +1,14 @@
+{
+    "workbench.colorTheme": "Catppuccin Mocha",
+    "workbench.secondarySideBar.showLabels": false,
+    "chat.disableAIFeatures": true,
+    "files.autoSave": "onWindowChange",
+    "editor.cursorSmoothCaretAnimation": "on",
+    "editor.mouseWheelZoom": true,
+    "editor.fontFamily": "FantasqueSansM Nerd Font Mono",
+    "editor.semanticHighlighting.enabled": true,
+    "vsicons.dontShowNewVersionMessage": true,
+    "git.autofetch": true,
+    "workbench.iconTheme": "vscode-icons",
+    "git.confirmSync": false
+}

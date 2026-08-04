@@ -1,6 +1,6 @@
-#!/bin/bash
+#!/bin/sh
 set -e
-source "$(dirname "$0")/lib.sh"
+. "$(dirname "$0")/lib.sh"
 
 echo "=== niri Wayland 窗口管理器 ==="
 install_deps niri

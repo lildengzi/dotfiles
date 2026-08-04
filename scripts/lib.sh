@@ -1,4 +1,4 @@
-#!/bin/bash
+#!/bin/sh
 set -e
 
 DOTFILES="$(cd "$(dirname "$0")/.." && pwd)"
@@ -6,23 +6,22 @@ DOTFILES="$(cd "$(dirname "$0")/.." && pwd)"
 detect_distro() {
     if [ -f /etc/os-release ]; then
         . /etc/os-release
-        echo "$ID"
+        printf '%s\n' "$ID"
     else
-        echo "unknown"
+        printf '%s\n' "unknown"
     fi
 }
 
 backup_config() {
-    local src="$1"
+    src="$1"
     if [ -e "$src" ]; then
-        local bak="${src}.bak.$(date +%Y%m%d-%H%M%S)"
+        bak="${src}.bak.$(date +%Y%m%d-%H%M%S)"
         cp -r "$src" "$bak"
-        echo "  备份: $src -> $bak"
+        printf '%s\n' "  备份: $src -> $bak"
     fi
 }
 
 install_deps() {
-    local distro
     distro=$(detect_distro)
     case "$distro" in
         arch|archarm|cachyos|endeavouros|manjaro)
@@ -38,7 +37,7 @@ install_deps() {
             sudo zypper install -y "$@"
             ;;
         *)
-            echo "  未知发行版 '$distro'，请自行安装: $*"
+            printf '%s\n' "  未知发行版 '$distro'，请自行安装: $*"
             ;;
     esac
 }

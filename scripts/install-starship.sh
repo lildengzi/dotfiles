@@ -1,10 +1,10 @@
-#!/bin/bash
+#!/bin/sh
 set -e
-source "$(dirname "$0")/lib.sh"
+. "$(dirname "$0")/lib.sh"
 
 echo "=== Starship 提示符 ==="
 
-if ! command -v starship &>/dev/null; then
+if ! command -v starship >/dev/null 2>&1; then
     echo "  安装 starship..."
     curl -sS https://starship.rs/install.sh | sh -s -- -y
 fi

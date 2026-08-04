@@ -1,0 +1,9 @@
+[editor]
+  default = "nvim"
+
+[opener]
+play = [
+  { run = "mpv --vo=kitty --no-border %s", desc = "Terminal (vo=kitty)", for = "unix", block = true },
+  { run = "mpv %s", desc = "Window (mpv)", for = "unix", orphan = true },
+  { run = "vlc %s", desc = "Window (vlc)", for = "unix", orphan = true },
+]
