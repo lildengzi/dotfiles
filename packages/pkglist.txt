@@ -34,7 +34,6 @@ cachyos-hooks
 cachyos-kernel-manager
 cachyos-keyring
 cachyos-ksm-settings
-cachyos-mangowc-dms
 cachyos-mirrorlist
 cachyos-rate-mirrors
 cachyos-settings
@@ -68,7 +67,6 @@ doxygen
 duf
 e2fsprogs
 easytier
-easytier-gui-bin
 edk2-ovmf
 efibootmgr
 efitools
@@ -97,10 +95,8 @@ github-cli
 godot
 godot-mono
 gpu-hotswitch-vfio
-gpu-screen-recorder
 graphviz
 greetd
-greetd-dms-greeter-git
 grim
 gst-plugin-pipewire
 gst-plugins-bad-libs
@@ -220,7 +216,6 @@ riscv64-linux-gnu-gcc
 riscv64-linux-gnu-gdb
 rsync
 rtkit
-sanaka
 shelly
 showmethekey
 slurp
@@ -297,10 +292,6 @@ waydroid-script-git
 wev
 wget
 which
-winboat
-wine
-wine-mono
-winetricks
 wireplumber
 wl-clipboard
 wpa_supplicant
