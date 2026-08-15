@@ -20,6 +20,7 @@
 | **Shell** | Fish，带 fastfetch 别名 |
 | **桌面工具** | fastfetch、mpv、btop、cava、MangoHud、GTK/fontconfig、环境变量与自启动 |
 | **壁纸** | 33 张精选壁纸 |
+| **Windows 配置** | starship、wezterm、nushell、komorebi、autohotkey、scoop/winget 清单备份 |
 
 ## 截图
 
@@ -81,6 +82,35 @@ sh scripts/install-vscode.sh  # VSCode 配置（本体请自行安装）
 
 安装脚本会自动检测你的发行版（Arch、Fedora、Debian、openSUSE 等）并选择合适的包管理器，
 备份已有配置，并安装缺少的依赖（非 Arch 系不保证完全可用）。
+
+## Windows 配置
+
+Windows 端的配置（starship、wezterm、nushell、komorebi、autohotkey、scoop/winget 清单）与 Linux 配置完全隔离，存放在 `windows/` 目录下。
+
+### 部署
+
+```powershell
+# 复制所有配置文件到正确路径（不安装软件）
+.\scripts\setup-windows.ps1 -SkipSoftware
+
+# 复制配置并尝试安装软件（安装失败不影响配置部署）
+.\scripts\setup-windows.ps1
+
+# 查看帮助
+.\scripts\setup-windows.ps1 -Help
+```
+
+### 清单导入（手动）
+
+scoop 和 winget 的清单备份仅作记录，不自动导入。恢复时手动执行：
+
+```powershell
+# 恢复 scoop 清单
+scoop import $env:USERPROFILE\scoop-export.json
+
+# 恢复 winget 清单
+winget import $env:USERPROFILE\winget-export.yaml
+```
 
 ## 灾难恢复
 

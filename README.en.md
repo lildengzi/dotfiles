@@ -20,6 +20,7 @@ The repo's `.config/` is the actual `~/.config` tree in use (with proxy/secrets 
 | **Shell** | Fish with fastfetch alias |
 | **Desktop tools** | fastfetch, mpv, btop, cava, MangoHud, GTK/fontconfig, env & autostart |
 | **Wallpapers** | 33 curated wallpapers |
+| **Windows config** | starship, wezterm, nushell, komorebi, autohotkey, scoop/winget manifest backups |
 
 ## Screenshots
 
@@ -81,6 +82,35 @@ sh scripts/install-vscode.sh  # VSCode config (install VSCode itself manually)
 
 Scripts auto-detect your distro (Arch, Fedora, Debian, openSUSE) and pick the right package manager,
 back up existing configs, and install missing dependencies (non-Arch not fully guaranteed).
+
+## Windows config
+
+Windows configurations (starship, wezterm, nushell, komorebi, autohotkey, scoop/winget manifests) are completely isolated from Linux configs and stored in the `windows/` directory.
+
+### Deployment
+
+```powershell
+# Copy all config files to the correct paths (no software installation)
+.\scripts\setup-windows.ps1 -SkipSoftware
+
+# Copy configs and attempt software installation (installation failures won't stop config deployment)
+.\scripts\setup-windows.ps1
+
+# Show help
+.\scripts\setup-windows.ps1 -Help
+```
+
+### Manifest import (manual)
+
+Scoop and winget manifests are backups only — they are not auto-imported. To restore manually:
+
+```powershell
+# Restore scoop manifest
+scoop import $env:USERPROFILE\scoop-export.json
+
+# Restore winget manifest
+winget import $env:USERPROFILE\winget-export.yaml
+```
 
 ## Disaster recovery
 

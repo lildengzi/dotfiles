@@ -1,0 +1,18 @@
+{
+  "monitor": 0,
+  "font_family": "Segoe UI",
+  "font_size": 12.0,
+  "left_widgets": [
+    {
+      "Komorebi": {
+        "workspaces": { "enable": true, "hide_empty_workspaces": true },
+        "layout": { "enable": true },
+        "focused_window": { "enable": true, "show_icon": true }
+      }
+    }
+  ],
+  "right_widgets": [
+    { "Memory": { "enable": true } },
+    { "Time": { "enable": true, "format": "TwentyFourHour" } }
+  ]
+}

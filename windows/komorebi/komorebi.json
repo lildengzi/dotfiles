@@ -1,0 +1,21 @@
+{
+  "default_workspace_padding": 2,
+  "default_container_padding": 2,
+  "border_width": 4,
+  "monitors": [
+    {
+      "workspaces": [
+        { "name": "1", "layout": "BSP" },
+        { "name": "2", "layout": "BSP" },
+        { "name": "3", "layout": "BSP" },
+        { "name": "4", "layout": "BSP" },
+        { "name": "5", "layout": "BSP" },
+        { "name": "6", "layout": "BSP" },
+        { "name": "7", "layout": "BSP" },
+        { "name": "8", "layout": "BSP" },
+        { "name": "9", "layout": "BSP" },
+        { "name": "0", "layout": "BSP" }
+      ]
+    }
+  ]
+}

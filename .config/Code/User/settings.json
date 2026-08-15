@@ -10,5 +10,6 @@
     "vsicons.dontShowNewVersionMessage": true,
     "git.autofetch": true,
     "workbench.iconTheme": "vscode-icons",
-    "git.confirmSync": false
+    "git.confirmSync": false,
+    "workbench.experimental.modernUI": true
 }

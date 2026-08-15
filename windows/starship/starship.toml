@@ -1,0 +1,78 @@
+# Starship 配置 - Tokyo Night 配色 / 默认风格
+# 适配 starship 1.26+（style 使用字符串形式）
+
+[character]
+success_symbol = "[❯](bold #9ece6a)"
+error_symbol = "[❯](bold #f7768e)"
+vimcmd_symbol = "[❮](bold #e0af68)"
+
+[directory]
+style = "bold #7aa2f7"
+truncation_length = 3
+truncation_symbol = "\U00002026/"
+read_only = " "
+format = "[$path]($style)[$read_only]($read_only_style)"
+
+[git_branch]
+symbol = "\U000F0126 "
+style = "#bb9af7"
+truncation_length = 20
+truncation_symbol = "\U00002026"
+
+[git_status]
+format = '([\[$all_status$ahead_behind\]]($style))'
+style = "#e0af68"
+
+[python]
+symbol = "\uE606 "
+style = "#9ece6a"
+python_binary = ["python3", "python"]
+
+[nodejs]
+symbol = "\uE718 "
+style = "#9ece6a"
+
+[rust]
+symbol = "\uE7A8 "
+style = "#ff9e64"
+
+[golang]
+symbol = "\uE627 "
+style = "#7dcfff"
+
+[java]
+symbol = "\uE204 "
+style = "#ff9e64"
+
+[php]
+symbol = "\uE608 "
+style = "#9d7cd8"
+
+[ruby]
+symbol = "\uE647 "
+style = "#f7768e"
+
+[lua]
+symbol = "\uE620 "
+style = "#7aa2f7"
+
+[cmd_duration]
+min_time = 2000
+show_milliseconds = true
+style = "#e0af68"
+
+[status]
+symbol = "\u2717 "
+format = "([$symbol$status]($style))"
+style = "#f7768e"
+
+[username]
+show_always = false
+style_user = "#7aa2f7"
+style_root = "bold #f7768e"
+
+[hostname]
+ssh_only = true
+
+[time]
+disabled = true

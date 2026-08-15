@@ -1,0 +1,129 @@
+{
+	"$schema" : "https://aka.ms/winget-packages.schema.2.0.json",
+	"CreationDate" : "2026-08-05T00:28:04.067-00:00",
+	"Sources" : 
+	[
+		{
+			"Packages" : 
+			[
+				{
+					"PackageIdentifier" : "AutoHotkey.AutoHotkey"
+				},
+				{
+					"PackageIdentifier" : "Git.Git"
+				},
+				{
+					"PackageIdentifier" : "LGUG2Z.komorebi"
+				},
+				{
+					"PackageIdentifier" : "Microsoft.CLRTypesSQLServer.2019"
+				},
+				{
+					"PackageIdentifier" : "Nushell.Nushell"
+				},
+				{
+					"PackageIdentifier" : "wez.wezterm"
+				},
+				{
+					"PackageIdentifier" : "Neovim.Neovim"
+				},
+				{
+					"InitialOverrideArguments" : "--quiet --wait --norestart --add Microsoft.VisualStudio.Workload.VCTools --includeRecommended --add Microsoft.VisualStudio.ComponentGroup.NativeDesktop.Llvm.Clang",
+					"PackageIdentifier" : "Microsoft.VisualStudio.2022.Community"
+				},
+				{
+					"PackageIdentifier" : "Microsoft.Edge"
+				},
+				{
+					"PackageIdentifier" : "pit-ray.win-vind"
+				},
+				{
+					"PackageIdentifier" : "Microsoft.VCRedist.2015+.x86"
+				},
+				{
+					"PackageIdentifier" : "Microsoft.VCRedist.2015+.x64"
+				},
+				{
+					"PackageIdentifier" : "DEVCOM.JetBrainsMonoNerdFont"
+				},
+				{
+					"PackageIdentifier" : "Microsoft.WindowsSDK.10.0.26100"
+				},
+				{
+					"PackageIdentifier" : "Cingano.wtop"
+				},
+				{
+					"PackageIdentifier" : "Fastfetch-cli.Fastfetch"
+				},
+				{
+					"PackageIdentifier" : "SST.opencode"
+				},
+				{
+					"PackageIdentifier" : "Starship.Starship"
+				},
+				{
+					"PackageIdentifier" : "cowboy8625.rusty-rain"
+				},
+				{
+					"PackageIdentifier" : "EasyTier.EasyTierGUI"
+				},
+				{
+					"PackageIdentifier" : "Microsoft.AppInstaller"
+				},
+				{
+					"PackageIdentifier" : "Microsoft.DotNet.Native.Runtime"
+				},
+				{
+					"PackageIdentifier" : "Microsoft.UI.Xaml.2.7"
+				},
+				{
+					"PackageIdentifier" : "Microsoft.UI.Xaml.2.8"
+				},
+				{
+					"PackageIdentifier" : "Microsoft.VCLibs.Desktop.14"
+				},
+				{
+					"PackageIdentifier" : "Microsoft.VCLibs.14"
+				},
+				{
+					"PackageIdentifier" : "Microsoft.WindowsAppRuntime.1.7"
+				},
+				{
+					"PackageIdentifier" : "Microsoft.WindowsAppRuntime.1.8"
+				},
+				{
+					"PackageIdentifier" : "Microsoft.WindowsAppRuntime.2"
+				}
+			],
+			"SourceDetails" : 
+			{
+				"Argument" : "https://mirrors.ustc.edu.cn/winget-source",
+				"Identifier" : "Microsoft.Winget.Source_8wekyb3d8bbwe",
+				"Name" : "winget",
+				"Type" : "Microsoft.PreIndexed.Package"
+			}
+		},
+		{
+			"Packages" : 
+			[
+				{
+					"PackageIdentifier" : "XP8M0M5N8RB8W7"
+				},
+				{
+					"PackageIdentifier" : "XPFPDHV4LFF8F0"
+				},
+				{
+					"PackageIdentifier" : "XP9KHM4BK9FZ7Q"
+				}
+			],
+			"SourceDetails" : 
+			{
+				"Argument" : "https://storeedgefd.dsx.mp.microsoft.com/v9.0",
+				"Identifier" : "StoreEdgeFD",
+				"Name" : "msstore",
+				"Type" : "Microsoft.Rest"
+			}
+		}
+	],
+	"WinGetVersion" : "1.29.280"
+}
