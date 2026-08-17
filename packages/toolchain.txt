@@ -1,0 +1,26 @@
+# 开发工具链（toolchain）
+#
+# 本机 rust/go/nodejs/bun/python 等多为依赖安装，pacman -Qqe 抓不到。
+# 此清单手写完整开发环境，供一键复现。
+#
+# agent npm 全局工具（npm i -g 安装，pacman 抓不到，需单独恢复）：
+#   npm-global: codex @openai/codex
+#
+# 恢复 agent npm 工具: sh scripts/install-agent-tools.sh
+
+aarch64-linux-gnu-gcc
+aarch64-linux-gnu-gdb
+biber
+cmake
+doxygen
+duf
+git
+lldb
+meson
+nodejs
+npm
+openocd
+ripgrep
+riscv64-linux-gnu-gcc
+riscv64-linux-gnu-gdb
+rust-src
