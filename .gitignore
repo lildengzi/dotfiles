@@ -1,2 +1,14 @@
 # Local-only sanity check script — not part of the repo
 scripts/check.sh
+
+# 敏感信息: 认证/密钥/代理配置永不入库
+auth.json
+*.auth.json
+.credentials
+*.key
+id_rsa
+id_ed25519
+*vmess*
+*vless*
+*.toml.easytier
+*.token
