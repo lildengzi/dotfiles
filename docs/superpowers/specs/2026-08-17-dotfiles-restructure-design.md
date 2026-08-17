@@ -100,14 +100,30 @@
   （system / desktop / drivers / cachyos / third-party / aur / toolchain）
 - 官方仓库包归入 system/desktop/drivers/cachyos/third-party
 - AUR 包（`pacman -Qqm`）归入 aur.txt
-- **toolchain.txt 独立记录开发工具链**：本机 rust/go/nodejs/bun/python 等多为
-  依赖安装（`pacman -Qqe` 抓不到，如 rust、go、pnpm、bun 均为 dependency）。
-  toolchain.txt 手写完整开发环境清单，供一键复现开发环境
+- **toolchain.txt 记录 agent 相关 npm 全局包**：codex、ctx7 这类
+  `npm i -g` 安装的工具，pacman 抓不到（本机 codex 曾用 npm 装，重装后彻底丢失）。
+  另含 rust/go/nodejs 等开发环境的**显式清单**（参考，标注版本），
+  用于一键复现完整开发环境
 - `install-packages.sh` 参数：分类名（如 `sh install-packages.sh desktop`），
   官方仓库用 pacman 装，AUR 用 paru 装
 - 更新方式：`pacman -Qqe | sort > 分类文件`（脚本辅助）
 
-## 开发工具链（toolchain）
+## agent 工具链（npm 全局）
+
+本机 agent 相关 npm 全局包现状（`/usr/lib/node_modules`）：
+
+| 包 | 现状 | 说明 |
+|----|------|------|
+| `@deepseek-ai/dsh` 0.1.0-rc.6 | 在 | deepseek harness |
+| `codex` | **丢失** | 曾用 npm 全局安装，重装后没了 |
+| `ctx7` | npx 临时用 | opencode AGENTS.md 已记录用法 |
+| node-gyp / nopt / semver | 依赖 | 随 npm 拖入 |
+
+- `packages/toolchain.txt` 记录 agent npm 全局包清单（含 codex），
+  并提供 `scripts/install-agent-tools.sh` 用 `npm i -g` 恢复
+- 常规编译工具链（rust/go/gcc 等）归入 toolchain.txt 的参考清单，不逐包手动写
+
+## 开发工具链（参考）
 
 本机实际开发环境（多数是依赖安装，不在 `pacman -Qqe` 中）：
 
@@ -122,8 +138,6 @@
 | cmake / meson / ninja | 4.4 / 1.12 / 1.13 | 构建工具 |
 | git / ripgrep / tmux | 2.55 / 15.2 / 3.7 | 基础工具 |
 | JDK | （无独立安装） | work 分类安装 `jdk-openjdk` + JAVA_HOME |
-
-`packages/toolchain.txt` 覆盖以上，确保重装后能一键复现完整开发环境。
 
 ## 壁纸
 
@@ -181,7 +195,7 @@
 ## 验收标准
 
 1. `install.sh` 嵌套菜单 5 组 × 子项，均可单独勾选，POSIX sh
-2. `packages/` 下 7 个分类文件，包数与本机一致（343），AUR 包全部在 aur.txt，toolchain.txt 覆盖完整开发环境
+2. `packages/` 下 7 个分类文件，包数与本机一致（343），AUR 包全部在 aur.txt，toolchain.txt 覆盖 agent npm 全局包（含 codex）
 3. `wallpapers/` 24 张，与本机 `~/Pictures/wallpapers` 一致；`install-walls.sh` 能装到正确目录
 4. 仓库中无 `lildengzi` 用户名、无密码明文、无 NAS/VPN 端点、无 token
 5. VSCode 配置与 install-vscode.sh 已移除
