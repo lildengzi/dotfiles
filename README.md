@@ -19,7 +19,7 @@
 | **提示符** | Starship（GUI / TTY / bash 三套配置） |
 | **Shell** | Fish，带 fastfetch 别名 |
 | **桌面工具** | fastfetch、mpv、btop、cava、MangoHud、GTK/fontconfig、环境变量与自启动 |
-| **壁纸** | 33 张精选壁纸 |
+| **壁纸** | 24 张精选壁纸 |
 
 ## 截图
 
@@ -77,26 +77,63 @@ sh scripts/install-packages.sh # 按分类安装包（如 sh install-packages.sh
 
 ## 灾难恢复
 
-电脑重装/系统炸了，一键恢复所有软件包（`packages/pkglist.txt` 是显式安装包的快照，含 AUR 包）：
+电脑重装/系统炸了，按步骤恢复：
+
+**1. 装包（按分类）**
 
 ```sh
 git clone https://github.com/lildengzi/dotfiles
 cd dotfiles
-paru -S --needed $(cat packages/pkglist.txt)
+sh scripts/install-packages.sh system drivers cachyos desktop third-party
+sh scripts/install-packages.sh aur        # 需要 paru
+sh scripts/install-agent-tools.sh         # agent npm 全局工具（codex 等）
 ```
 
-> 注意：清单含 cachyos 仓库的包（如 `linux-cachyos`）。
+`packages/` 下有 7 个分类清单：system / desktop / drivers / cachyos / third-party / aur / toolchain。
+
+> 注意：cachyos 分类含 cachyos 仓库的包（如 `linux-cachyos`）。
 > 若重装的是纯净 Arch，先安装并启用 [cachyos-mirrorlist](https://github.com/CachyOS/CachyOS-PKGBUILDS/tree/master/cachyos-mirrorlist)，
 > 或用 Arch 内核替代 `linux-cachyos`。
 
-更新清单（装新包后）：
+**2. 装配置（嵌套菜单）**
 
 ```sh
-pacman -Qqe > packages/pkglist.txt
+sh scripts/install.sh
+```
+
+选择 Desktop / Work / Agent，每个子项可单独勾选。
+
+**3. 恢复虚拟机（数据在 `/mnt/E/Rescue`）**
+
+```sh
+sh scripts/restore/winboat.sh    # Windows 虚拟机（配置 + 数据）
+sh scripts/restore/distrobox.sh  # 重建 5 个 distrobox 容器
+sh scripts/restore/waydroid.sh   # waydroid
+sh scripts/restore/avd.sh        # Android 模拟器
+sh scripts/restore/osx-kvm.sh    # macOS VM
+sh scripts/restore/podman.sh     # podman 容器
+```
+
+小配置在 `vms/`，大数据从 `/mnt/E/Rescue` 拷贝。
+
+**4. 硬件覆盖（仅本机）**
+
+```sh
+sh scripts/apply-machine.sh       # 只在 lildengzi-cachyos 写入 HDMI-A-1 等硬件位
+```
+
+## 更新包清单
+
+```sh
+pacman -Qqe | sort > packages/system.txt   # 按分类手动归入
+pacman -Qqm > packages/aur.txt             # AUR 包
 ```
 
 ## 与众不同之处
 
+- **解耦安装** — Desktop（桌面外观）/ Work（工作环境）/ Agent（AI 工具链）三大类，各自子项可单独勾选，互不捆绑
+- **分类包清单** — `packages/` 下 7 类，系统/桌面/驱动/CachyOS/第三方/AUR/工具链按需安装
+- **agent 工具链独立记录** — codex 等 npm 全局工具在 `packages/toolchain.txt`，`install-agent-tools.sh` 一键恢复
 - **POSIX sh 安装脚本** — 所有 `scripts/*.sh` 都是纯 sh，不依赖 bash，任何发行版都能直接 `sh` 运行
 - **fish 的 fetch 回退** — `ff` = `fastfetch`；如果系统没有 fastfetch，`fetch` 命令会优雅降级，不会在 distrobox/SSH 里启动失败
 - **SSH / 容器自动检测** — fish 检测到 SSH、TTY、容器时会自动切换到保守的 ASCII 提示符，避免把桌面/GPU 假设泄漏进远程环境
@@ -105,6 +142,8 @@ pacman -Qqe > packages/pkglist.txt
 - **Yazi 终端内播放视频** — `mpv --vo=kitty` 直接在文件管理器里预览视频，不弹独立窗口
 - **Kitty 淡雅主题** — 内置 `dank-tabs.conf` / `dank-theme.conf`（slanted powerline 标签栏 + 灰紫配色），CJK 字体自动回退
 - **niri 录屏快捷键** — `Mod+Alt+R` 开始 / `Mod+Alt+Shift+R` 停止录屏
+- **壁纸自动归位** — `install-walls.sh` 把壁纸复制到 `~/Pictures/wallpapers`，DMS 直接引用
+- **硬件配置通用化** — `outputs.kdl` 保持通用，本机硬件位由 `apply-machine.sh` 单独写入
 
 ## 手动复制
 
@@ -142,7 +181,8 @@ nvim  # 打开后自动安装插件
 
 - niri/DMS 是可选的 — 终端 + 编辑器在任何窗口管理器下都能用
 - PipeWire 音频配置和 ananicy 规则不含在内（机器相关）
-- 代理相关配置不含在内（v2ray / sing-box / proxyd / nas-conn 等）
+- 代理相关配置不含在内
 - 隐私敏感项已清除：musixmatch token、VPN/NAS 服务器地址、clangd 机器路径等
+- VSCode 配置不入仓库（云端同步），Zed 保留
 - Neovim 配置使用 lazy.nvim，首次打开会自动安装所有插件
 - 基于 Linux（Arch 系），脚本会自动检测发行版并选择包管理器，但非 Arch 系不保证完全可用

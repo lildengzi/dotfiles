@@ -77,27 +77,63 @@ back up existing configs, and install missing dependencies (non-Arch not fully g
 
 ## Disaster recovery
 
-Reinstall lost your machine? Restore every software package from `packages/pkglist.txt`
-(a snapshot of explicitly installed packages, including AUR):
+Reinstall lost your machine? Restore step by step:
+
+**1. Install packages (by category)**
 
 ```sh
 git clone https://github.com/lildengzi/dotfiles
 cd dotfiles
-paru -S --needed $(cat packages/pkglist.txt)
+sh scripts/install-packages.sh system drivers cachyos desktop third-party
+sh scripts/install-packages.sh aur        # requires paru
+sh scripts/install-agent-tools.sh         # agent npm globals (codex, etc.)
 ```
 
-> Note: the snapshot includes CachyOS repo packages (e.g. `linux-cachyos`).
+`packages/` holds 7 categorized lists: system / desktop / drivers / cachyos / third-party / aur / toolchain.
+
+> Note: the cachyos list includes CachyOS repo packages (e.g. `linux-cachyos`).
 > On a clean Arch install, install and enable [cachyos-mirrorlist](https://github.com/CachyOS/CachyOS-PKGBUILDS/tree/master/cachyos-mirrorlist)
 > first, or replace `linux-cachyos` with the stock Arch kernel.
 
-To update the snapshot after installing new packages:
+**2. Install configs (nested menu)**
 
 ```sh
-pacman -Qqe > packages/pkglist.txt
+sh scripts/install.sh
+```
+
+Choose Desktop / Work / Agent; every sub-item can be toggled individually.
+
+**3. Restore VMs (big data lives in `/mnt/E/Rescue`)**
+
+```sh
+sh scripts/restore/winboat.sh    # Windows VM (config + data)
+sh scripts/restore/distrobox.sh  # recreate 5 distrobox containers
+sh scripts/restore/waydroid.sh   # waydroid
+sh scripts/restore/avd.sh        # Android emulator
+sh scripts/restore/osx-kvm.sh    # macOS VM
+sh scripts/restore/podman.sh     # podman containers
+```
+
+Small configs live in `vms/`, big data is copied from `/mnt/E/Rescue`.
+
+**4. Machine hardware overlay (this host only)**
+
+```sh
+sh scripts/apply-machine.sh      # writes HDMI-A-1 etc. only on lildengzi-cachyos
+```
+
+## Updating package lists
+
+```sh
+pacman -Qqe | sort > packages/system.txt   # sort into categories manually
+pacman -Qqm > packages/aur.txt             # AUR packages
 ```
 
 ## What makes this different
 
+- **Decoupled install** — Desktop / Work / Agent, each with individually toggleable sub-items, no hard coupling
+- **Categorized package lists** — 7 categories under `packages/`, install what you need
+- **Agent toolchain recorded separately** — npm globals like codex live in `packages/toolchain.txt`, restored via `install-agent-tools.sh`
 - **POSIX sh install scripts** — every `scripts/*.sh` is pure sh, no bash dependency, runnable on any distro
 - **fish `fetch` fallback** — `ff` = `fastfetch`; if fastfetch is missing, the `fetch` command degrades gracefully instead of failing distrobox/SSH startup
 - **SSH / container auto-detection** — fish switches to a conservative ASCII prompt over SSH/TTY/containers, so desktop/GPU assumptions don't leak into remote environments
@@ -106,6 +142,8 @@ pacman -Qqe > packages/pkglist.txt
 - **In-terminal video preview in Yazi** — `mpv --vo=kitty` previews videos right in the file manager, no separate window
 - **Kitty muted theme** — bundled `dank-tabs.conf` / `dank-theme.conf` (slanted powerline tabs + grey-purple palette), with CJK font fallback
 - **niri recording shortcuts** — `Mod+Alt+R` start / `Mod+Alt+Shift+R` stop recording
+- **Wallpapers auto-installed** — `install-walls.sh` copies them to `~/Pictures/wallpapers`, referenced by DMS
+- **Generic hardware configs** — `outputs.kdl` stays generic; host-specific bits are applied by `apply-machine.sh`
 
 ## Manual copy
 
@@ -143,7 +181,8 @@ nvim  # auto-installs plugins
 
 - niri/DMS are optional — the terminal + editor work on any WM
 - PipeWire audio config and ananicy rules are not included (machine-specific)
-- Proxy-related configs are not included (v2ray / sing-box / proxyd / nas-conn etc.)
+- Proxy-related configs are not included
 - Privacy-sensitive items removed: musixmatch token, VPN/NAS server addresses, clangd machine paths
+- VSCode config is not in the repo (cloud-synced); Zed is kept
 - Neovim config uses lazy.nvim and will auto-install all plugins on first launch
 - Built on Linux (Arch-based); scripts auto-detect your distro and package manager, non-Arch not fully guaranteed
