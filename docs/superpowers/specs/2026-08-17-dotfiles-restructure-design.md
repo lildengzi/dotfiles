@@ -147,16 +147,28 @@
 - 修正 DMS `plugin_settings.json` 的 `wallpaperDirectory`：仓库里是 `~/Pictures/wallpaper`（单数，少 s），改为 `~/Pictures/wallpapers`
 - 壁纸是唯一留在 git 的二进制
 
-## 敏感信息脱敏
+## 敏感信息脱敏（红线）
+
+以下内容**一律不得进入仓库**（含 agent 配置）：
 
 | 位置 | 处理 |
 |------|------|
 | `~/.winboat/podman-compose.yml` 密码 | 换成占位符 |
 | 配置中的 `/home/lildengzi` | 换成 `$HOME` / `~` |
 | proxy.fish、nas-conn/phone-conn 函数 | 不进仓库（NAS/VPN 端点） |
-| v2ray / sing-box / easytier 端点 | 脱敏或剔除 |
-| token / API key（musixmatch 等） | 剔除 |
+| **v2ray / sing-box vmess / vless 等代理配置** | 一律不入库（含 agent 相关） |
+| **easytier 配置（easytier.toml / 节点私钥）** | 一律不入库 |
+| **agent 配置中的 api-key / token / 密钥**（opencode、claude、codex、orca 等） | 一律剔除 |
+| musixmatch token 等 | 剔除（当前为空的 `musixmatchToken` 字段可保留，但值必须为空） |
 | VSCode 配置 | 整个移出（其中含大量个人设置） |
+
+入库前验证命令：
+
+```sh
+grep -rn -iE "vmess|vless|api[_-]?key|secret|token|password|easytier" .config/ packages/ scripts/ vms/ .agents/ .claude/ .config/opencode/ 2>/dev/null
+```
+
+命中即先脱敏再提交。
 
 ## 配置同步
 
