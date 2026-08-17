@@ -5,77 +5,41 @@ SCRIPT_DIR="$(dirname "$0")"
 echo "================================"
 echo "      dotfiles 安装器"
 echo "================================"
-echo ""
-echo "你想安装什么？"
-echo ""
-echo "  1) 全部安装（完整桌面环境）"
-echo "  2) 仅终端 + 编辑器"
-echo "  3) 自定义选择"
-echo "  4) 仅复制全部配置（不装软件）"
-echo "  0) 退出"
-echo ""
 
-printf "选择 [0-4]: "
-read choice
+while :; do
+    echo ""
+    echo "  1) Desktop   — 桌面外观"
+    echo "  2) Work      — 工作环境"
+    echo "  3) Agent     — AI agent 工具链"
+    echo "  4) Packages  — 系统软件（分类）"
+    echo "  5) VMs       — 虚拟机恢复"
+    echo "  0) 退出"
+    printf "选择 [0-5]: "
+    read choice
 
-case "$choice" in
-    1)
-        sh "$SCRIPT_DIR/install-font.sh"
-        sh "$SCRIPT_DIR/install-kitty.sh"
-        sh "$SCRIPT_DIR/install-nvim.sh"
-        sh "$SCRIPT_DIR/install-yazi.sh"
-        sh "$SCRIPT_DIR/install-niri.sh"
-        sh "$SCRIPT_DIR/install-fish.sh"
-        sh "$SCRIPT_DIR/install-starship.sh"
-        sh "$SCRIPT_DIR/install-vscode.sh"
-        sh "$SCRIPT_DIR/install-config.sh"
-        ;;
-    2)
-        sh "$SCRIPT_DIR/install-font.sh"
-        sh "$SCRIPT_DIR/install-kitty.sh"
-        sh "$SCRIPT_DIR/install-nvim.sh"
-        sh "$SCRIPT_DIR/install-yazi.sh"
-        sh "$SCRIPT_DIR/install-starship.sh"
-        echo ""
-        echo "提示：Kitty + nvim + yazi + starship 已安装。"
-        echo "如果你用其他终端/shell，手动复制 config 即可。"
-        ;;
-    3)
-        echo ""
-        echo "可选的组件（y/n）:"
-        for c in font kitty nvim yazi niri fish starship vscode config; do
-            printf "  安装 %s ? [y/N] " "$c"
-            read yn
-            case "$yn" in
-                y|Y)
-                    case "$c" in
-                        font)    sh "$SCRIPT_DIR/install-font.sh" ;;
-                        kitty)   sh "$SCRIPT_DIR/install-kitty.sh" ;;
-                        nvim)    sh "$SCRIPT_DIR/install-nvim.sh" ;;
-                        yazi)    sh "$SCRIPT_DIR/install-yazi.sh" ;;
-                        niri)    sh "$SCRIPT_DIR/install-niri.sh" ;;
-                        fish)    sh "$SCRIPT_DIR/install-fish.sh" ;;
-                        starship) sh "$SCRIPT_DIR/install-starship.sh" ;;
-                        vscode)  sh "$SCRIPT_DIR/install-vscode.sh" ;;
-                        config)  sh "$SCRIPT_DIR/install-config.sh" ;;
-                    esac
-                    ;;
-                *)
-                    ;;
-            esac
-        done
-        ;;
-    4)
-        sh "$SCRIPT_DIR/install-config.sh"
-        ;;
-    0)
-        exit 0
-        ;;
-    *)
-        echo "无效选择，退出。"
-        exit 1
-        ;;
-esac
-
-echo ""
-echo "完成！重启或重新登录后生效。"
+    case "$choice" in
+        1) sh "$SCRIPT_DIR/profiles/desktop.sh" ;;
+        2) sh "$SCRIPT_DIR/profiles/work.sh" ;;
+        3) sh "$SCRIPT_DIR/profiles/agent.sh" ;;
+        4)
+            echo "包分类:"
+            for f in "$SCRIPT_DIR"/../packages/*.txt; do
+                echo "  $(basename "$f" .txt)"
+            done
+            printf "输入要安装的分类（空格分隔，或回车跳过）: "
+            read cats
+            [ -n "$cats" ] && sh "$SCRIPT_DIR/install-packages.sh" $cats
+            ;;
+        5)
+            echo "虚拟机:"
+            for f in "$SCRIPT_DIR"/restore/*.sh; do
+                echo "  $(basename "$f" .sh)"
+            done
+            printf "输入要恢复的虚拟机（空格分隔，或回车跳过）: "
+            read vms
+            [ -n "$vms" ] && for vm in $vms; do sh "$SCRIPT_DIR/restore/$vm.sh"; done
+            ;;
+        0) exit 0 ;;
+        *) echo "无效选择" ;;
+    esac
+done
