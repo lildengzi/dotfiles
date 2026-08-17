@@ -65,16 +65,20 @@
 | 分类 | 内容 | 组件 |
 |------|------|------|
 | **Desktop** | 桌面外观 | niri、DankMaterialShell、壁纸、autostart、gtk/fontconfig 外观 |
-| **Work** | 工作环境 | nvim、yazi、kitty、fish、starship、终端工具（alacritty/btop/cava/mpv/MangoHud/fastfetch/environment.d）、字体 |
+| **Work** | 工作环境 | nvim、yazi、kitty、fish、starship、终端工具（alacritty/btop/cava/mpv/MangoHud/fastfetch/environment.d）、字体、最新 JDK（`jdk-openjdk`，写入 environment.d 的 JAVA_HOME） |
 | **Agent** | AI agent 配置 | opencode 配置、~/.agents/skills、~/.claude/settings.json、superpowers skills |
 | **Packages** | 系统软件 | 6 类包清单，按类安装 |
 | **VMs** | 虚拟机恢复 | winboat / distrobox / waydroid / AVD / OSX-KVM / podman |
+
+说明：本机目前没有独立 JDK（仅 Android Studio 自带 JBR），
+为保险起见 Work 分类会安装 Arch 系最新 `jdk-openjdk` 并配置 JAVA_HOME。
 
 规则：
 
 - **VSCode 配置移出仓库**（云端同步，本地有 851M 的 Code 配置）。`install-vscode.sh` 删除
 - **Zed 保留**（未登录云端，68K 小配置，保留在 work 分类）
 - 组件级脚本（install-kitty.sh 等）保留，可直接调用
+- Work 分类安装最新 JDK（`jdk-openjdk`），并把 `JAVA_HOME=/usr/lib/jvm/java-openjdk` 与 `PATH` 写入 `~/.config/environment.d/java.conf`
 
 ## 嵌套菜单
 
