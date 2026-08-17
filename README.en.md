@@ -15,7 +15,7 @@ The repo's `.config/` is the actual `~/.config` tree in use (with proxy/secrets 
 | **Terminal** | Kitty (dank theme), FantasqueSansM Nerd Font |
 | **Editor** | Neovim + LazyVim, catppuccin, LSP (rust-analyzer, pyright, ruff), DAP, treesitter, rainbow-delimiters, indent-blankline |
 | **File manager** | Yazi terminal file manager, editing via nvim, in-terminal video preview |
-| **Code editor** | VSCode + Zed, catppuccin theme, autosave |
+| **Code editor** | Zed (VSCode config is cloud-synced, not in repo) |
 | **Prompt** | Starship (GUI / TTY / bash presets) |
 | **Shell** | Fish with fastfetch alias |
 | **Desktop tools** | fastfetch, mpv, btop, cava, MangoHud, GTK/fontconfig, env & autostart |
@@ -35,14 +35,6 @@ The repo's `.config/` is the actual `~/.config` tree in use (with proxy/secrets 
 
 ![Yazi preview](Docs/Pictures/yazipreview.png)
 
-### VSCode
-
-![VSCode preview](Docs/Pictures/vscodepreview.png)
-
-![VSCode preview 2](Docs/Pictures/vscodepreview2.png)
-
-![VSCode installed plugins](Docs/Pictures/vscode-used-plugin.png)
-
 ## Quick start
 
 One-liner (downloads and launches the installer):
@@ -60,10 +52,11 @@ sh scripts/install.sh
 ```
 
 Choose from:
-1. **Full desktop** — niri + DMS + Kitty + nvim + yazi + fish + starship + vscode + font + all configs
-2. **Terminal + editor only** — Kitty + nvim + yazi + starship + font
-3. **Pick your own** — select individual components
-4. **Config only** — copy the whole `.config/`, install nothing
+1. **Desktop** — desktop appearance (niri + DMS + wallpapers + autostart + appearance)
+2. **Work** — dev environment (nvim + yazi + kitty + fish + starship + terminal tools + fonts + JDK)
+3. **Agent** — AI agent toolchain (opencode + skills + claude + npm globals)
+4. **Packages** — system software (per category)
+5. **VMs** — VM restore (winboat / distrobox / waydroid / AVD / OSX-KVM / podman)
 
 Each component can also be installed individually (all scripts are POSIX sh, no bash needed):
 
@@ -76,7 +69,7 @@ sh scripts/install-yazi.sh    # Yazi file manager
 sh scripts/install-niri.sh    # niri WM
 sh scripts/install-fish.sh    # Fish shell
 sh scripts/install-starship.sh # Starship prompt
-sh scripts/install-vscode.sh  # VSCode config (install VSCode itself manually)
+sh scripts/install-packages.sh # install packages by category (e.g. sh install-packages.sh desktop aur)
 ```
 
 Scripts auto-detect your distro (Arch, Fedora, Debian, openSUSE) and pick the right package manager,
@@ -141,9 +134,10 @@ nvim  # auto-installs plugins
 - [Neovim](https://github.com/neovim/neovim) ≥ 0.10
 - [Kitty](https://sw.kovidgoyal.net/kitty/) (or use your own terminal)
 - [Yazi](https://yazi-rs.github.io/) file manager
-- [VSCode](https://code.visualstudio.com/) code editor
+- [Zed](https://zed.dev/) code editor
 - [Starship](https://starship.rs/) prompt
 - [Fish](https://fishshell.com/) shell
+- JDK (optional, `scripts/profiles/work.sh` can install `jdk-openjdk` automatically)
 
 ## Notes
 

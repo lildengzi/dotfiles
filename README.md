@@ -15,7 +15,7 @@
 | **终端** | Kitty（dank 主题），字体 FantasqueSansM Nerd Font |
 | **编辑器** | Neovim + LazyVim，配色 catppuccin，LSP (rust-analyzer / pyright / ruff)，DAP 调试，treesitter 语法高亮，彩虹括号，缩进线 |
 | **文件管理器** | Yazi 终端文件管理器，编辑默认使用 nvim，支持终端内播放视频 |
-| **代码编辑器** | VSCode + Zed，catppuccin 主题，自动保存 |
+| **代码编辑器** | Zed（VSCode 配置云端同步，不入仓库） |
 | **提示符** | Starship（GUI / TTY / bash 三套配置） |
 | **Shell** | Fish，带 fastfetch 别名 |
 | **桌面工具** | fastfetch、mpv、btop、cava、MangoHud、GTK/fontconfig、环境变量与自启动 |
@@ -35,14 +35,6 @@
 
 ![Yazi 预览](Docs/Pictures/yazipreview.png)
 
-### VSCode
-
-![VSCode 预览](Docs/Pictures/vscodepreview.png)
-
-![VSCode 预览 2](Docs/Pictures/vscodepreview2.png)
-
-![VSCode 已装插件](Docs/Pictures/vscode-used-plugin.png)
-
 ## 快速安装
 
 一行命令（自动下载并启动安装器）：
@@ -60,10 +52,11 @@ sh scripts/install.sh
 ```
 
 选择菜单：
-1. **完整桌面** — niri + DMS + Kitty + nvim + yazi + fish + starship + vscode + 字体 + 全部配置
-2. **仅终端 + 编辑器** — Kitty + nvim + yazi + starship + 字体
-3. **自定义** — 勾选你想要的组件
-4. **仅复制全部配置** — 只拷 `.config/`，不装软件
+1. **Desktop** — 桌面外观（niri + DMS + 壁纸 + 自启动 + 外观）
+2. **Work** — 工作环境（nvim + yazi + kitty + fish + starship + 终端工具 + 字体 + JDK）
+3. **Agent** — AI agent 工具链（opencode + skills + claude + npm 全局工具）
+4. **Packages** — 系统软件（按分类安装）
+5. **VMs** — 虚拟机恢复（winboat / distrobox / waydroid / AVD / OSX-KVM / podman）
 
 也可以单独安装某个组件（脚本全部为 POSIX sh，无需 bash）：
 
@@ -76,7 +69,7 @@ sh scripts/install-yazi.sh    # Yazi 文件管理器
 sh scripts/install-niri.sh    # niri 窗口管理器
 sh scripts/install-fish.sh    # Fish shell
 sh scripts/install-starship.sh # Starship 提示符
-sh scripts/install-vscode.sh  # VSCode 配置（本体请自行安装）
+sh scripts/install-packages.sh # 按分类安装包（如 sh install-packages.sh desktop aur）
 ```
 
 安装脚本会自动检测你的发行版（Arch、Fedora、Debian、openSUSE 等）并选择合适的包管理器，
@@ -140,9 +133,10 @@ nvim  # 打开后自动安装插件
 - [Neovim](https://github.com/neovim/neovim) ≥ 0.10
 - [Kitty](https://sw.kovidgoyal.net/kitty/)（也可以用你自己的终端）
 - [Yazi](https://yazi-rs.github.io/) 文件管理器
-- [VSCode](https://code.visualstudio.com/) 代码编辑器
+- [Zed](https://zed.dev/) 代码编辑器
 - [Starship](https://starship.rs/) 提示符
 - [Fish](https://fishshell.com/) shell
+- JDK（可选，`scripts/profiles/work.sh` 可自动安装 `jdk-openjdk`）
 
 ## 备注
 
