@@ -32,6 +32,7 @@
 │   ├── cachyos.txt       # CachyOS 专属：linux-cachyos, cachyos-*, greetd
 │   ├── third-party.txt   # 官方仓库的第三方：docker, steam, discord
 │   └── aur.txt           # AUR：brave-bin, visual-studio-code-bin 等
+│   └── toolchain.txt     # 开发工具链（独立记录，因多数为依赖安装）
 ├── scripts/
 │   ├── install.sh            # 嵌套菜单入口
 │   ├── lib.sh                # 公共函数（detect_distro / backup / install_deps）
@@ -65,8 +66,7 @@
 | 分类 | 内容 | 组件 |
 |------|------|------|
 | **Desktop** | 桌面外观 | niri、DankMaterialShell、壁纸、autostart、gtk/fontconfig 外观 |
-| **Work** | 工作环境 | nvim、yazi、kitty、fish、starship、终端工具（alacritty/btop/cava/mpv/MangoHud/fastfetch/environment.d）、字体、最新 JDK（`jdk-openjdk`，写入 environment.d 的 JAVA_HOME） |
-| **Agent** | AI agent 配置 | opencode 配置、~/.agents/skills、~/.claude/settings.json、superpowers skills |
+| **Work** | 工作环境 | nvim、yazi、kitty、fish、starship、终端工具（alacritty/btop/cava/mpv/MangoHud/fastfetch/environment.d）、字体、最新 JDK（`jdk-openjdk`，写入 environment.d 的 JAVA_HOME） || **Agent** | AI agent 配置 | opencode 配置、~/.agents/skills、~/.claude/settings.json、superpowers skills |
 | **Packages** | 系统软件 | 6 类包清单，按类安装 |
 | **VMs** | 虚拟机恢复 | winboat / distrobox / waydroid / AVD / OSX-KVM / podman |
 
@@ -86,7 +86,7 @@
 1) Desktop   → 1) niri  2) DMS shell  3) wallpapers  4) autostart  5) appearance(gtk/fontconfig)
 2) Work      → 1) nvim  2) yazi  3) kitty  4) fish  5) starship  6) terminal tools  7) fonts
 3) Agent     → 1) opencode  2) agents skills  3) claude  4) superpowers
-4) Packages  → 1) system  2) desktop  3) drivers  4) cachyos  5) third-party  6) aur
+4) Packages  → 1) system  2) desktop  3) drivers  4) cachyos  5) third-party  6) aur  7) toolchain
 5) VMs       → 1) winboat  2) distrobox  3) waydroid  4) AVD  5) OSX-KVM  6) podman
 0) Quit
 ```
@@ -96,12 +96,34 @@
 
 ## 包清单
 
-- 以本机 `pacman -Qqe`（343 个）为源重新生成，分成 6 个文件
+- 以本机 `pacman -Qqe`（343 个）为源手工分类，分成 7 个文件
+  （system / desktop / drivers / cachyos / third-party / aur / toolchain）
 - 官方仓库包归入 system/desktop/drivers/cachyos/third-party
 - AUR 包（`pacman -Qqm`）归入 aur.txt
+- **toolchain.txt 独立记录开发工具链**：本机 rust/go/nodejs/bun/python 等多为
+  依赖安装（`pacman -Qqe` 抓不到，如 rust、go、pnpm、bun 均为 dependency）。
+  toolchain.txt 手写完整开发环境清单，供一键复现开发环境
 - `install-packages.sh` 参数：分类名（如 `sh install-packages.sh desktop`），
   官方仓库用 pacman 装，AUR 用 paru 装
 - 更新方式：`pacman -Qqe | sort > 分类文件`（脚本辅助）
+
+## 开发工具链（toolchain）
+
+本机实际开发环境（多数是依赖安装，不在 `pacman -Qqe` 中）：
+
+| 工具 | 版本（本机） | 备注 |
+|------|-------------|------|
+| rust / cargo / rust-src | 1.97.1 | pacman 安装，非 rustup；无 `~/.rustup` |
+| go | 1.26.5 | 依赖安装 |
+| node / npm | 26.7.0 / 12.0.2 | nodejs/npm 显式，pnpm 11.3.0 为依赖 |
+| bun | 1.3.14 | 依赖安装 |
+| python | 3.14.7 | 显式 |
+| gcc / gdb / clang / llvm | 16.2 / 17.2 / 22.1 | 编译器套件 |
+| cmake / meson / ninja | 4.4 / 1.12 / 1.13 | 构建工具 |
+| git / ripgrep / tmux | 2.55 / 15.2 / 3.7 | 基础工具 |
+| JDK | （无独立安装） | work 分类安装 `jdk-openjdk` + JAVA_HOME |
+
+`packages/toolchain.txt` 覆盖以上，确保重装后能一键复现完整开发环境。
 
 ## 壁纸
 
@@ -159,7 +181,7 @@
 ## 验收标准
 
 1. `install.sh` 嵌套菜单 5 组 × 子项，均可单独勾选，POSIX sh
-2. `packages/` 下 6 个分类文件，包数与本机一致（343），AUR 包全部在 aur.txt
+2. `packages/` 下 7 个分类文件，包数与本机一致（343），AUR 包全部在 aur.txt，toolchain.txt 覆盖完整开发环境
 3. `wallpapers/` 24 张，与本机 `~/Pictures/wallpapers` 一致；`install-walls.sh` 能装到正确目录
 4. 仓库中无 `lildengzi` 用户名、无密码明文、无 NAS/VPN 端点、无 token
 5. VSCode 配置与 install-vscode.sh 已移除
