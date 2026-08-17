@@ -5,7 +5,7 @@
 ![desktop](Docs/Pictures/desktop.png)
 
 Personal dotfiles on Linux (Arch-based) — niri + DMS + Kitty + fish + Neovim.
-The repo's `.config/` is the actual `~/.config` tree in use (with proxy/secrets removed).
+The repo's `.config/` is the actual `~/.config` tree in use.
 
 ## What's included
 
@@ -181,8 +181,6 @@ nvim  # auto-installs plugins
 
 - niri/DMS are optional — the terminal + editor work on any WM
 - PipeWire audio config and ananicy rules are not included (machine-specific)
-- Proxy-related configs are not included
-- Privacy-sensitive items removed: musixmatch token, VPN/NAS server addresses, clangd machine paths
 - VSCode config is not in the repo (cloud-synced); Zed is kept
 - Neovim config uses lazy.nvim and will auto-install all plugins on first launch
 - Built on Linux (Arch-based); scripts auto-detect your distro and package manager, non-Arch not fully guaranteed

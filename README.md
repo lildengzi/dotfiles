@@ -5,7 +5,7 @@
 ![desktop](Docs/Pictures/desktop.png)
 
 个人 dotfiles，运行于 Linux（基于 Arch 系）— niri + DMS + Kitty + fish + Neovim。
-仓库的 `.config/` 就是实际使用的 `~/.config` 目录树（去除了代理/密钥等隐私）。
+仓库的 `.config/` 就是实际使用的 `~/.config` 目录树。
 
 ## 包含什么
 
@@ -181,8 +181,6 @@ nvim  # 打开后自动安装插件
 
 - niri/DMS 是可选的 — 终端 + 编辑器在任何窗口管理器下都能用
 - PipeWire 音频配置和 ananicy 规则不含在内（机器相关）
-- 代理相关配置不含在内
-- 隐私敏感项已清除：musixmatch token、VPN/NAS 服务器地址、clangd 机器路径等
 - VSCode 配置不入仓库（云端同步），Zed 保留
 - Neovim 配置使用 lazy.nvim，首次打开会自动安装所有插件
 - 基于 Linux（Arch 系），脚本会自动检测发行版并选择包管理器，但非 Arch 系不保证完全可用

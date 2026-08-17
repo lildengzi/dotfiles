@@ -7,6 +7,11 @@
 #   npm-global: codex @openai/codex
 #
 # 恢复 agent npm 工具: sh scripts/install-agent-tools.sh
+#
+# 手动安装工具（非 pacman，需手动恢复）：
+#   easytier-core / easytier-cli 2.6.4 — 二进制在 ~/.local/bin/，
+#     从 GitHub release (https://github.com/EasyTier/EasyTier/releases) 下载。
+#     配置不入库（含节点私钥）。
 
 aarch64-linux-gnu-gcc
 aarch64-linux-gnu-gdb
