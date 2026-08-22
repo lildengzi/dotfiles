@@ -63,11 +63,15 @@ Write-Host "Dotfiles root: $DotfilesRoot`n"
 
 # --- Starship ---
 Write-Host "--- Starship ---" -ForegroundColor Yellow
-Copy-Config (Join-Path $WindowsConfigDir "starship\starship.toml") (Join-Path $UserProfile ".config\starship.toml")
+Copy-Config (Join-Path $WindowsConfigDir "starship\starship.toml") (Join-Path $UserProfile ".config\starship\starship.toml")
 Copy-Config (Join-Path $WindowsConfigDir "starship\init.nu") (Join-Path $UserProfile ".config\starship\init.nu")
 
-# --- WezTerm ---
-Write-Host "`n--- WezTerm ---" -ForegroundColor Yellow
+# --- Mintty (default terminal) ---
+Write-Host "`n--- Mintty ---" -ForegroundColor Yellow
+Copy-Config (Join-Path $WindowsConfigDir "mintty\minttyrc") (Join-Path $UserProfile ".config\mintty\minttyrc")
+
+# --- WezTerm (optional terminal, kept as fallback) ---
+Write-Host "`n--- WezTerm (optional) ---" -ForegroundColor Yellow
 Copy-Config (Join-Path $WindowsConfigDir "wezterm\wezterm.lua") (Join-Path $UserProfile ".config\wezterm\wezterm.lua")
 
 # --- Nushell ---
@@ -78,20 +82,11 @@ Copy-Config (Join-Path $WindowsConfigDir "nushell\config.nu") (Join-Path $UserPr
 Write-Host "`n--- Komorebi ---" -ForegroundColor Yellow
 Copy-Config (Join-Path $WindowsConfigDir "komorebi\komorebi.json") (Join-Path $UserProfile ".config\komorebi\komorebi.json")
 Copy-Config (Join-Path $WindowsConfigDir "komorebi\komorebi-schema.json") (Join-Path $UserProfile "komorebi-schema.json")
-Copy-Config (Join-Path $WindowsConfigDir "komorebi\komorebi.bar.json") (Join-Path $UserProfile "komorebi.bar.json")
+Copy-Config (Join-Path $WindowsConfigDir "komorebi\komorebi.bar.json") (Join-Path $UserProfile ".config\komorebi\komorebi.bar.json")
 
-# --- AutoHotKey ---
+# --- AutoHotKey (komorebi hotkeys) ---
 Write-Host "`n--- AutoHotKey ---" -ForegroundColor Yellow
-$ahkDest = Join-Path $UserProfile "Documents\AutoHotkey"
-if (Test-Path (Join-Path $WindowsConfigDir "autohotkey")) {
-    if (-not (Test-Path $ahkDest)) {
-        New-Item -ItemType Directory -Path $ahkDest -Force | Out-Null
-    }
-    Copy-Item -Path (Join-Path $WindowsConfigDir "autohotkey\*") -Destination $ahkDest -Recurse -Force
-    Write-Host "  [OK] Copied: autohotkey -> $ahkDest" -ForegroundColor Green
-} else {
-    Write-Host "  [SKIP] autohotkey source not found" -ForegroundColor Yellow
-}
+Copy-Config (Join-Path $WindowsConfigDir "autohotkey\komorebi.ahk") (Join-Path $UserProfile ".config\komorebi\komorebi.ahk")
 
 # --- Scoop / Winget manifests (backup only, no auto-import) ---
 Write-Host "`n--- Package Manifests (backup only) ---" -ForegroundColor Yellow
@@ -110,6 +105,32 @@ To restore your package list from the backups:
 
 Or manually install each package listed in the export files.
 "@
+
+# --- Scheduled tasks (komorebi WM + AHK hotkeys auto-start) ---
+Write-Host "`n--- Scheduled Tasks ---" -ForegroundColor Yellow
+function Register-LoginTask {
+    param([string]$TaskName, [string]$Execute, [string]$Argument)
+    $action = New-ScheduledTaskAction -Execute $Execute -Argument $Argument
+    $trigger = New-ScheduledTaskTrigger -AtLogOn -User "$env:USERNAME"
+    $principal = New-ScheduledTaskPrincipal -UserId "$env:USERDOMAIN\$env:USERNAME" -LogonType Interactive -RunLevel Limited
+    $settings = New-ScheduledTaskSettingsSet -AllowStartIfOnBatteries -DontStopIfGoingOnBatteries -MultipleInstances IgnoreNew
+    Register-ScheduledTask -TaskName $TaskName -Action $action -Trigger $trigger -Principal $principal -Settings $settings -Force | Out-Null
+    Write-Host "  [OK] Registered task: $TaskName" -ForegroundColor Green
+}
+
+$komorebicExe = "C:\Program Files\komorebi\bin\komorebic.exe"
+$ahkExe = "C:\Program Files\AutoHotkey\v2\AutoHotkey64.exe"
+
+if (Test-Path $komorebicExe) {
+    Register-LoginTask -TaskName "Komorebi" -Execute $komorebicExe -Argument "start --config $UserProfile\.config\komorebi\komorebi.json"
+} else {
+    Write-Host "  [SKIP] komorebic.exe not found" -ForegroundColor Yellow
+}
+if (Test-Path $ahkExe) {
+    Register-LoginTask -TaskName "Komorebi-AHK" -Execute $ahkExe -Argument "$UserProfile\.config\komorebi\komorebi.ahk"
+} else {
+    Write-Host "  [SKIP] AutoHotkey64.exe not found" -ForegroundColor Yellow
+}
 
 # --- Software Installation ---
 if (-not $SkipSoftware) {

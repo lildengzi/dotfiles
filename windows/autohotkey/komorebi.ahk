@@ -5,8 +5,8 @@ RunKomo(cmd) {
     Run('"C:\Program Files\komorebi\bin\komorebic.exe" ' cmd, "", "Hide")
 }
 
-; ---- launch terminal ----
-!Enter::Run('"C:\Program Files\WeZTerm\wezterm-gui.exe"')
+; ---- launch terminal (mintty + Nushell) ----
+!Enter::Run('"C:\Program Files\Git\usr\bin\mintty.exe" -c "C:\Users\lildengzi\.config\mintty\minttyrc" -e nu', "C:\Users\lildengzi")
 
 ; ---- reload komorebi config ----
 !o::RunKomo('reload-configuration')

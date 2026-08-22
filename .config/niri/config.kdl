@@ -294,12 +294,6 @@ output "eDP-1" {
     position x=0 y=0
 }
 
-// 录屏快捷键：Super + R 切换录制
-binds {
-    Mod+Alt+R hotkey-overlay-title="开始录屏" { spawn "record-start"; }
-    Mod+Alt+Shift+R hotkey-overlay-title="停止录屏" { spawn "record-stop"; }
-}
-
 // Rescue mode: avoid forcing an external HDMI output during login.
 // On many hybrid laptops, HDMI is wired to the NVIDIA dGPU.
 // output "HDMI-A-1" {

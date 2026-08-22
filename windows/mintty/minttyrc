@@ -1,0 +1,37 @@
+# mintty configuration for Nushell + Nerd Font
+# Tokyo Night 配色
+
+Font=JetBrainsMonoNL NFP
+FontSize=11
+
+# Window
+Columns=120
+Rows=32
+
+# Copy/Paste (Windows habits)
+CtrlShiftShortcuts=yes
+
+# Cursor
+CursorType=block
+CursorColour=26,27,38
+
+# ===== Tokyo Night 配色 =====
+ForegroundColour=192,202,245
+BackgroundColour=26,27,38
+
+Black=21,22,30
+BoldBlack=65,72,104
+Red=247,118,142
+BoldRed=255,158,175
+Green=158,206,106
+BoldGreen=195,232,141
+Yellow=224,175,104
+BoldYellow=255,206,122
+Blue=122,162,247
+BoldBlue=169,195,255
+Magenta=187,154,247
+BoldMagenta=201,169,255
+Cyan=125,207,255
+BoldCyan=158,224,255
+White=169,177,214
+BoldWhite=192,202,245
