@@ -2,6 +2,7 @@ android-studio
 biliup-rs-bin
 deepseek-harness-bin
 dmg2img
+easytier
 linuxqq
 mcpp-bin
 pacseek
