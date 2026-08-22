@@ -1,0 +1,6 @@
+# distrobox 容器清单：name image
+arch-VM  docker.io/library/archlinux:latest
+fedora-VM docker.io/library/fedora:latest
+ubuntu-VM docker.io/library/ubuntu:latest
+alpine-VM localhost/alpine-fix:latest
+gentoo-VM docker.io/gentoo/stage3:latest

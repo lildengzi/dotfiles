@@ -5,7 +5,7 @@
 ![desktop](Docs/Pictures/desktop.png)
 
 Personal dotfiles on Linux (Arch-based) — niri + DMS + Kitty + fish + Neovim.
-The repo's `.config/` is the actual `~/.config` tree in use (with proxy/secrets removed).
+The repo's `.config/` is the actual `~/.config` tree in use.
 
 ## What's included
 
@@ -15,7 +15,7 @@ The repo's `.config/` is the actual `~/.config` tree in use (with proxy/secrets 
 | **Terminal** | Kitty (dank theme), FantasqueSansM Nerd Font |
 | **Editor** | Neovim + LazyVim, catppuccin, LSP (rust-analyzer, pyright, ruff), DAP, treesitter, rainbow-delimiters, indent-blankline |
 | **File manager** | Yazi terminal file manager, editing via nvim, in-terminal video preview |
-| **Code editor** | VSCode + Zed, catppuccin theme, autosave |
+| **Code editor** | Zed (VSCode config is cloud-synced, not in repo) |
 | **Prompt** | Starship (GUI / TTY / bash presets) |
 | **Shell** | Fish with fastfetch alias |
 | **Desktop tools** | fastfetch, mpv, btop, cava, MangoHud, GTK/fontconfig, env & autostart |
@@ -36,14 +36,6 @@ The repo's `.config/` is the actual `~/.config` tree in use (with proxy/secrets 
 
 ![Yazi preview](Docs/Pictures/yazipreview.png)
 
-### VSCode
-
-![VSCode preview](Docs/Pictures/vscodepreview.png)
-
-![VSCode preview 2](Docs/Pictures/vscodepreview2.png)
-
-![VSCode installed plugins](Docs/Pictures/vscode-used-plugin.png)
-
 ## Quick start
 
 One-liner (downloads and launches the installer):
@@ -61,10 +53,11 @@ sh scripts/install.sh
 ```
 
 Choose from:
-1. **Full desktop** — niri + DMS + Kitty + nvim + yazi + fish + starship + vscode + font + all configs
-2. **Terminal + editor only** — Kitty + nvim + yazi + starship + font
-3. **Pick your own** — select individual components
-4. **Config only** — copy the whole `.config/`, install nothing
+1. **Desktop** — desktop appearance (niri + DMS + wallpapers + autostart + appearance)
+2. **Work** — dev environment (nvim + yazi + kitty + fish + starship + terminal tools + fonts + JDK)
+3. **Agent** — AI agent toolchain (opencode + skills + claude + npm globals)
+4. **Packages** — system software (per category)
+5. **VMs** — VM restore (winboat / distrobox / waydroid / AVD / OSX-KVM / podman)
 
 Each component can also be installed individually (all scripts are POSIX sh, no bash needed):
 
@@ -77,7 +70,7 @@ sh scripts/install-yazi.sh    # Yazi file manager
 sh scripts/install-niri.sh    # niri WM
 sh scripts/install-fish.sh    # Fish shell
 sh scripts/install-starship.sh # Starship prompt
-sh scripts/install-vscode.sh  # VSCode config (install VSCode itself manually)
+sh scripts/install-packages.sh # install packages by category (e.g. sh install-packages.sh desktop aur)
 ```
 
 Scripts auto-detect your distro (Arch, Fedora, Debian, openSUSE) and pick the right package manager,
@@ -114,27 +107,63 @@ winget import $env:USERPROFILE\winget-export.yaml
 
 ## Disaster recovery
 
-Reinstall lost your machine? Restore every software package from `packages/pkglist.txt`
-(a snapshot of explicitly installed packages, including AUR):
+Reinstall lost your machine? Restore step by step:
+
+**1. Install packages (by category)**
 
 ```sh
 git clone https://github.com/lildengzi/dotfiles
 cd dotfiles
-paru -S --needed $(cat packages/pkglist.txt)
+sh scripts/install-packages.sh system drivers cachyos desktop third-party
+sh scripts/install-packages.sh aur        # requires paru
+sh scripts/install-agent-tools.sh         # agent npm globals (codex, etc.)
 ```
 
-> Note: the snapshot includes CachyOS repo packages (e.g. `linux-cachyos`).
+`packages/` holds 7 categorized lists: system / desktop / drivers / cachyos / third-party / aur / toolchain.
+
+> Note: the cachyos list includes CachyOS repo packages (e.g. `linux-cachyos`).
 > On a clean Arch install, install and enable [cachyos-mirrorlist](https://github.com/CachyOS/CachyOS-PKGBUILDS/tree/master/cachyos-mirrorlist)
 > first, or replace `linux-cachyos` with the stock Arch kernel.
 
-To update the snapshot after installing new packages:
+**2. Install configs (nested menu)**
 
 ```sh
-pacman -Qqe > packages/pkglist.txt
+sh scripts/install.sh
+```
+
+Choose Desktop / Work / Agent; every sub-item can be toggled individually.
+
+**3. Restore VMs (big data lives in `/mnt/E/Rescue`)**
+
+```sh
+sh scripts/restore/winboat.sh    # Windows VM (config + data)
+sh scripts/restore/distrobox.sh  # recreate 5 distrobox containers
+sh scripts/restore/waydroid.sh   # waydroid
+sh scripts/restore/avd.sh        # Android emulator
+sh scripts/restore/osx-kvm.sh    # macOS VM
+sh scripts/restore/podman.sh     # podman containers
+```
+
+Small configs live in `vms/`, big data is copied from `/mnt/E/Rescue`.
+
+**4. Machine hardware overlay (this host only)**
+
+```sh
+sh scripts/apply-machine.sh      # writes HDMI-A-1 etc. only on lildengzi-cachyos
+```
+
+## Updating package lists
+
+```sh
+pacman -Qqe | sort > packages/system.txt   # sort into categories manually
+pacman -Qqm > packages/aur.txt             # AUR packages
 ```
 
 ## What makes this different
 
+- **Decoupled install** — Desktop / Work / Agent, each with individually toggleable sub-items, no hard coupling
+- **Categorized package lists** — 7 categories under `packages/`, install what you need
+- **Agent toolchain recorded separately** — npm globals like codex live in `packages/toolchain.txt`, restored via `install-agent-tools.sh`
 - **POSIX sh install scripts** — every `scripts/*.sh` is pure sh, no bash dependency, runnable on any distro
 - **fish `fetch` fallback** — `ff` = `fastfetch`; if fastfetch is missing, the `fetch` command degrades gracefully instead of failing distrobox/SSH startup
 - **SSH / container auto-detection** — fish switches to a conservative ASCII prompt over SSH/TTY/containers, so desktop/GPU assumptions don't leak into remote environments
@@ -143,6 +172,8 @@ pacman -Qqe > packages/pkglist.txt
 - **In-terminal video preview in Yazi** — `mpv --vo=kitty` previews videos right in the file manager, no separate window
 - **Kitty muted theme** — bundled `dank-tabs.conf` / `dank-theme.conf` (slanted powerline tabs + grey-purple palette), with CJK font fallback
 - **niri recording shortcuts** — `Mod+Alt+R` start / `Mod+Alt+Shift+R` stop recording
+- **Wallpapers auto-installed** — `install-walls.sh` copies them to `~/Pictures/wallpapers`, referenced by DMS
+- **Generic hardware configs** — `outputs.kdl` stays generic; host-specific bits are applied by `apply-machine.sh`
 
 ## Manual copy
 
@@ -171,15 +202,15 @@ nvim  # auto-installs plugins
 - [Neovim](https://github.com/neovim/neovim) ≥ 0.10
 - [Kitty](https://sw.kovidgoyal.net/kitty/) (or use your own terminal)
 - [Yazi](https://yazi-rs.github.io/) file manager
-- [VSCode](https://code.visualstudio.com/) code editor
+- [Zed](https://zed.dev/) code editor
 - [Starship](https://starship.rs/) prompt
 - [Fish](https://fishshell.com/) shell
+- JDK (optional, `scripts/profiles/work.sh` can install `jdk-openjdk` automatically)
 
 ## Notes
 
 - niri/DMS are optional — the terminal + editor work on any WM
 - PipeWire audio config and ananicy rules are not included (machine-specific)
-- Proxy-related configs are not included (v2ray / sing-box / proxyd / nas-conn etc.)
-- Privacy-sensitive items removed: musixmatch token, VPN/NAS server addresses, clangd machine paths
+- VSCode config is not in the repo (cloud-synced); Zed is kept
 - Neovim config uses lazy.nvim and will auto-install all plugins on first launch
 - Built on Linux (Arch-based); scripts auto-detect your distro and package manager, non-Arch not fully guaranteed

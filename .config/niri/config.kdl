@@ -294,6 +294,13 @@ output "eDP-1" {
     position x=0 y=0
 }
 
+// Android Emulator: force floating + fixed position (avoid subsurface sticking to other windows)
+window-rule {
+    match app-id="Emulator"
+    open-floating true
+    default-floating-position x=80 y=80 relative-to="top-left"
+}
+
 // Rescue mode: avoid forcing an external HDMI output during login.
 // On many hybrid laptops, HDMI is wired to the NVIDIA dGPU.
 // output "HDMI-A-1" {

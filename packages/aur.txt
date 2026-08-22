@@ -1,0 +1,14 @@
+android-studio
+biliup-rs-bin
+deepseek-harness-bin
+dmg2img
+easytier
+linuxqq
+mcpp-bin
+pacseek
+quickemu
+stably-orca-bin
+ttf-lucida-fonts
+ttf-ms-fonts
+ttf-smiley-sans-bin
+visual-studio-code-bin

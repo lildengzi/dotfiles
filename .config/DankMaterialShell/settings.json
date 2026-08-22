@@ -339,10 +339,10 @@
     }
   ],
   "networkPreference": "wifi",
-  "iconThemeDark": "Adwaita",
+  "iconThemeDark": "System Default",
   "iconThemeLight": "System Default",
   "iconThemePerMode": false,
-  "lastAppliedIconTheme": "Adwaita",
+  "lastAppliedIconTheme": "",
   "cursorSettings": {
     "theme": "Adwaita",
     "size": 26,
@@ -392,7 +392,7 @@
   "soundVolumeChanged": true,
   "soundPluggedIn": true,
   "muteSoundsWhenMediaPlaying": true,
-  "acMonitorTimeout": 0,
+  "acMonitorTimeout": 900,
   "acLockTimeout": 0,
   "acSuspendTimeout": 0,
   "acSuspendBehavior": 0,
@@ -547,6 +547,14 @@
       "enabled": true,
       "field": "appName",
       "pattern": "notify-send",
+      "matchType": "exact",
+      "action": "mute",
+      "urgency": "default"
+    },
+    {
+      "enabled": true,
+      "field": "appName",
+      "pattern": "Fcitx",
       "matchType": "exact",
       "action": "mute",
       "urgency": "default"

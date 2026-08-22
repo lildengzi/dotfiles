@@ -1,0 +1,40 @@
+name: winboat
+volumes:
+  data:
+services:
+  windows:
+    image: ghcr.io/dockur/windows:5.14
+    container_name: WinBoat
+    environment:
+      VERSION: custom
+      RAM_SIZE: 4G
+      CPU_CORES: "2"
+      DISK_SIZE: 256G
+      USERNAME: __USER__
+      PASSWORD: "__CHANGE_ME__"
+      HOME: ${HOME}
+      LANGUAGE: English
+      NETWORK: user
+      USER_PORTS: "7148,22"
+      HOST_PORTS: "7149"
+      ARGUMENTS: -qmp tcp:0.0.0.0:7149,server,wait=off
+    cap_add:
+      - NET_ADMIN
+    ports:
+      - 127.0.0.1::8006/tcp
+      - 127.0.0.1::7148/tcp
+      - 127.0.0.1::7149/tcp
+      - 127.0.0.1::3389/tcp
+      - 127.0.0.1::3389/udp
+      - 127.0.0.1::22/tcp
+    stop_grace_period: 120s
+    restart: "no"
+    privileged: true
+    volumes:
+      - $HOME/winboat:/storage
+      - ${HOME}:/shared
+      - ./oem:/oem
+      - /mnt/ISOs/__WINDOWS_ISO__.iso:/boot.iso
+    devices:
+      - /dev/kvm
+      - /dev/bus/usb
