@@ -17,8 +17,8 @@
   "buttonColorMode": "primary",
   "cornerRadius": 12,
   "niriLayoutGapsOverride": -1,
-  "niriLayoutRadiusOverride": -1,
-  "niriLayoutBorderSize": 3,
+  "niriLayoutRadiusOverride": 12,
+  "niriLayoutBorderSize": 2,
   "hyprlandLayoutGapsOverride": -1,
   "hyprlandLayoutGapsOutOverride": -1,
   "hyprlandLayoutRadiusOverride": -1,
@@ -45,10 +45,10 @@
   "popoutCustomAnimationDuration": 150,
   "modalAnimationSpeed": 0,
   "modalCustomAnimationDuration": 150,
-  "enableRippleEffects": true,
+  "enableRippleEffects": false,
   "animationVariant": 0,
   "motionEffect": 0,
-  "m3ElevationEnabled": true,
+  "m3ElevationEnabled": false,
   "m3ElevationIntensity": 12,
   "m3ElevationOpacity": 30,
   "m3ElevationColorMode": "default",
@@ -66,8 +66,8 @@
   "blurBorderOpacity": 0.35,
   "wallpaperFillMode": "Fill",
   "blurredWallpaperLayer": false,
-  "blurWallpaperOnOverview": true,
-  "wallpaperBackgroundColorMode": "primary",
+  "blurWallpaperOnOverview": false,
+  "wallpaperBackgroundColorMode": "custom",
   "wallpaperBackgroundCustomColor": "#000000",
   "showLauncherButton": true,
   "showWorkspaceSwitcher": true,
@@ -111,9 +111,9 @@
   "controlCenterShowIdleInhibitorIcon": false,
   "controlCenterShowDoNotDisturbIcon": false,
   "showPrivacyButton": true,
-  "privacyShowMicIcon": false,
-  "privacyShowCameraIcon": false,
-  "privacyShowScreenShareIcon": false,
+  "privacyShowMicIcon": true,
+  "privacyShowCameraIcon": true,
+  "privacyShowScreenShareIcon": true,
   "controlCenterWidgets": [
     {
       "id": "volumeSlider",
@@ -124,7 +124,7 @@
       "id": "brightnessSlider",
       "enabled": true,
       "width": 50,
-      "deviceName": "ddc:i2c-3"
+      "deviceName": "ddc:i2c-5"
     },
     {
       "id": "inputVolumeSlider",
@@ -147,22 +147,22 @@
       "width": 50
     },
     {
-      "id": "doNotDisturb",
-      "enabled": true,
-      "width": 50
-    },
-    {
-      "id": "darkMode",
-      "enabled": true,
-      "width": 50
-    },
-    {
       "id": "colorPicker",
       "enabled": true,
       "width": 50
     },
     {
       "id": "wifi",
+      "enabled": true,
+      "width": 50
+    },
+    {
+      "id": "plugin_quickCapture",
+      "enabled": true,
+      "width": 50
+    },
+    {
+      "id": "plugin_dankKDEConnect",
       "enabled": true,
       "width": 50
     }
@@ -228,7 +228,7 @@
   "trayAutoOverflow": true,
   "trayPopupSingleLine": true,
   "trayMaxVisibleItems": 0,
-  "appsDockHideIndicators": false,
+  "appsDockHideIndicators": true,
   "appsDockColorizeActive": false,
   "appsDockActiveColorMode": "primary",
   "appsDockEnlargeOnHover": false,
@@ -266,7 +266,7 @@
       "type": "regex"
     }
   ],
-  "centeringMode": "index",
+  "centeringMode": "geometric",
   "clockDateFormat": "",
   "lockDateFormat": "",
   "greeterRememberLastSession": true,
@@ -342,10 +342,10 @@
   "iconThemeDark": "System Default",
   "iconThemeLight": "System Default",
   "iconThemePerMode": false,
-  "lastAppliedIconTheme": "",
+  "lastAppliedIconTheme": "breeze-dark",
   "cursorSettings": {
     "theme": "Adwaita",
-    "size": 26,
+    "size": 24,
     "niri": {
       "hideWhenTyping": false,
       "hideAfterInactiveMs": 0
@@ -359,18 +359,18 @@
       "cursorHideTimeout": 0
     }
   },
-  "launcherLogoMode": "compositor",
+  "launcherLogoMode": "os",
   "launcherLogoCustomPath": "",
   "launcherLogoColorOverride": "primary",
   "launcherLogoColorInvertOnMode": false,
   "launcherLogoBrightness": 0.5,
   "launcherLogoContrast": 1,
   "launcherLogoSizeOffset": 0,
-  "fontFamily": "Noto Sans CJK HK Black",
-  "monoFontFamily": "Monospace",
-  "fontWeight": 900,
+  "fontFamily": "Noto Sans CJK HK Medium",
+  "monoFontFamily": "Noto Sans Mono Medium",
+  "fontWeight": 700,
   "fontScale": 1,
-  "textRenderType": 0,
+  "textRenderType": 1,
   "textRenderQuality": 0,
   "notepadUseMonospace": true,
   "notepadFontFamily": "",
@@ -397,7 +397,7 @@
   "acSuspendTimeout": 0,
   "acSuspendBehavior": 0,
   "acProfileName": "",
-  "acPostLockMonitorTimeout": 0,
+  "acPostLockMonitorTimeout": 15,
   "batteryMonitorTimeout": 0,
   "batteryLockTimeout": 0,
   "batterySuspendTimeout": 0,
@@ -464,7 +464,7 @@
     }
   },
   "matugenTemplateNeovimSetBackground": true,
-  "showDock": true,
+  "showDock": false,
   "dockAutoHide": false,
   "dockSmartAutoHide": true,
   "dockUseOverlayLayer": false,
@@ -628,7 +628,7 @@
   "hyprlandOutputSettings": {},
   "displayProfiles": {},
   "activeDisplayProfile": {
-    "niri": "auto_ea9abafb"
+    "niri": "auto_eed335bb"
   },
   "displayProfileAutoSelect": true,
   "displayShowDisconnected": false,
@@ -655,17 +655,15 @@
         },
         {
           "id": "focusedWindow",
-          "enabled": true
+          "enabled": true,
+          "focusedWindowSize": 1
         }
       ],
       "centerWidgets": [
         {
-          "id": "liveLyrics",
-          "enabled": true
-        },
-        {
           "id": "clock",
-          "enabled": true
+          "enabled": true,
+          "clockCompactMode": false
         },
         {
           "id": "weather",
@@ -675,7 +673,8 @@
       "rightWidgets": [
         {
           "id": "systemTray",
-          "enabled": true
+          "enabled": true,
+          "trayUseInlineExpansion": false
         },
         {
           "id": "clipboard",
@@ -686,18 +685,24 @@
           "enabled": true
         },
         {
-          "id": "quickCapture",
+          "id": "amdGpuMonitor:variant_1786989457489",
+          "enabled": true
+        },
+        {
+          "id": "nvidiaGpuDankbarMonitor:variant_1787028021064",
           "enabled": true
         },
         {
           "id": "cpuUsage",
           "enabled": true,
-          "minimumWidth": true
+          "minimumWidth": false
         },
         {
           "id": "memUsage",
           "enabled": true,
-          "minimumWidth": true
+          "minimumWidth": false,
+          "showSwap": false,
+          "showInGb": false
         },
         {
           "id": "battery",
@@ -709,20 +714,20 @@
         }
       ],
       "spacing": 0,
-      "innerPadding": 0,
+      "innerPadding": 4,
       "bottomGap": 0,
-      "transparency": 0.85,
-      "widgetTransparency": 0.05,
+      "transparency": 0.8,
+      "widgetTransparency": 0,
       "squareCorners": true,
       "noBackground": true,
       "gothCornersEnabled": true,
       "gothCornerRadiusOverride": false,
-      "gothCornerRadiusValue": 8,
+      "gothCornerRadiusValue": 12,
       "borderEnabled": false,
       "borderColor": "surfaceText",
       "borderOpacity": 0,
       "borderThickness": 5,
-      "fontScale": 1,
+      "fontScale": 0.9,
       "autoHide": false,
       "autoHideDelay": 570,
       "openOnOverview": false,
@@ -731,7 +736,7 @@
       "popupGapsManual": 4,
       "widgetPadding": 8,
       "widgetOutlineEnabled": false,
-      "iconScale": 1,
+      "iconScale": 0.9,
       "maximizeWidgetIcons": false,
       "maximizeWidgetText": false,
       "removeWidgetPadding": false,
@@ -741,7 +746,10 @@
       "scrollYBehavior": "column",
       "maximizeDetection": false,
       "shadowIntensity": 0,
-      "scrollXBehavior": "workspace"
+      "scrollXBehavior": "workspace",
+      "useOverlayLayer": false,
+      "barInsetPadding": 4,
+      "shadowOpacity": 60
     }
   ],
   "desktopClockEnabled": false,
@@ -891,6 +899,63 @@
           "width": 1040,
           "height": 120,
           "x": 440,
+          "y": 960
+        }
+      },
+      "group": "dwg_1783013492911_lucbc3rmn"
+    },
+    {
+      "id": "dw_1786973843531_87ec44h44",
+      "widgetType": "pureLyrics",
+      "name": "Pure Lyrics",
+      "enabled": true,
+      "config": {
+        "displayPreferences": [
+          "all"
+        ],
+        "fontSize": 18,
+        "lineCount": "5",
+        "textAlign": "right",
+        "scrollOffset": 610,
+        "showOnOverlay": true,
+        "showOnOverview": true,
+        "clickThrough": true,
+        "backgroundOpacity": 0,
+        "colorMode": "primary",
+        "customColor": {
+          "r": 0.40784314274787903,
+          "g": 0.6235446929931641,
+          "b": 0.21960784494876862,
+          "a": 1,
+          "hsvHue": 0.25566667318344116,
+          "hsvSaturation": 0.6478065252304077,
+          "hsvValue": 0.6235446929931641,
+          "hslHue": 0.25566667318344116,
+          "hslSaturation": 0.479072242975235,
+          "hslLightness": 0.42157626152038574,
+          "valid": true
+        },
+        "borderOpacity": 0,
+        "source1": "lrclib",
+        "source2": "musixmatch",
+        "preferredPlayer": "auto",
+        "filterDuplicates": true,
+        "musixmatchToken": "260825287b3d0079de755156a04589d5a9668d6332489a32a24da9",
+        "source4": "none",
+        "source3": "none",
+        "cachingEnabled": true
+      },
+      "positions": {
+        "eDP-2": {
+          "width": 720,
+          "height": 200,
+          "x": 1200,
+          "y": 440
+        },
+        "HDMI-A-1": {
+          "width": 680,
+          "height": 120,
+          "x": 1240,
           "y": 960
         }
       },

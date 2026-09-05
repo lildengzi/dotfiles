@@ -86,7 +86,15 @@ end
 function __codex_fetch_dispatch
     set -l args $argv
 
-    if type -P fastfetch >/dev/null
+    # `command -q` queries the external binary only, ignoring the fastfetch
+    # function defined below — otherwise the check would always match itself.
+    if command -q fastfetch
+        # Inside a distrobox/podman container, override the CachyOS logo that
+        # config.jsonc forces (shared ~/.config) so each container shows its
+        # own distro logo. Host is unaffected → keeps CachyOS_old_small.
+        if set -q container; or test -e /run/.containerenv
+            set args --logo auto $args
+        end
         command fastfetch $args
         return $status
     end
@@ -98,17 +106,16 @@ function fetch
     __codex_fetch_dispatch $argv
 end
 
-for cmd in fastfetch
-    if not test -n (type -P $cmd)
-        function $cmd --description "Compatibility wrapper for missing fetch command"
-            __codex_fetch_dispatch $argv
-        end
-    end
+# Always route fastfetch through the dispatcher so the container-aware logo
+# applies to direct `fastfetch` calls too; also acts as the missing-binary
+# fallback so distrobox shells never fail startup.
+function fastfetch --description "Container-aware fastfetch wrapper + fetch fallback"
+    __codex_fetch_dispatch $argv
 end
 
 if not __is_portable_shell
     function fish_greeting
-        XDG_CURRENT_DESKTOP="DankMaterialShell" fetch --logo-position top
+        XDG_CURRENT_DESKTOP="DankMaterialShell" fetch --config $HOME/.config/fastfetch/greeting.jsonc
     end
 else
     function fish_greeting
@@ -169,3 +176,5 @@ alias steam="env STEAM_FORCE_WAYLAND=0 /usr/bin/steam"
 alias vi nvim
 alias vim nvim
 alias zed zeditor
+
+# omp 访问 Google Gemini 官方 API 需要走本地代理（2026-08-21）

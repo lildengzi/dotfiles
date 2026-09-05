@@ -3,7 +3,8 @@
     "enabled": false
   },
   "dankKDEConnect": {
-    "enabled": false
+    "enabled": true,
+    "selectedDeviceId": ""
   },
   "liveLyrics": {
     "enabled": true,
@@ -95,7 +96,7 @@
   "wallpaperCarousel": {
     "enabled": true,
     "overlayOpacity": 80,
-    "wallpaperDirectory": "~/Pictures/wallpapers",
+    "wallpaperDirectory": "/home/lildengzi/Pictures/wallpapers",
     "expandSelected": "false"
   },
   "appShortcut": {
@@ -105,6 +106,90 @@
     "enabled": false
   },
   "quickCapture": {
+    "enabled": true,
+    "color_palette_preset": "custom",
+    "toolbar_color_1": "#FF0900"
+  },
+  "materialPlayer": {
     "enabled": true
+  },
+  "lyricsOnPanel": {
+    "enabled": true
+  },
+  "dankDesktopWeather": {
+    "enabled": false
+  },
+  "musicLyrics": {
+    "enabled": true
+  },
+  "pureLyrics": {
+    "enabled": true
+  },
+  "systemMonitor": {
+    "enabled": true,
+    "gpuPciId": "1002:1681",
+    "showGpu": false,
+    "gpuShowValue": false,
+    "showMem": false,
+    "showCpu": false,
+    "cpuShowIcon": true,
+    "metricOrder": [
+      "cpu",
+      "cpuFreq",
+      "temp",
+      "mem",
+      "gpu",
+      "net",
+      "disk"
+    ],
+    "gpuShowIcon": true,
+    "gpuShowChart": true
+  },
+  "nvidiaGpuDankbarMonitor": {
+    "enabled": true,
+    "variants": [
+      {
+        "gpuPci": "0000:01:00.0",
+        "gpuType": "",
+        "originalName": "NVIDIA GeForce RTX 3060 Laptop GPU",
+        "description": "Monitor your NVIDIA GeForce RTX 3060 Laptop GPU",
+        "icon": "memory",
+        "id": "variant_1787028021064",
+        "name": "NVIDIA GeForce RTX 3060 Laptop GPU"
+      }
+    ]
+  },
+  "nvidiaGpuMonitor": {
+    "variants": [
+      {
+        "gpuPci": "0000:01:00.0",
+        "gpuType": "",
+        "originalName": "NVIDIA GeForce RTX 3060 Laptop GPU",
+        "description": "Monitor your NVIDIA GeForce RTX 3060 Laptop GPU",
+        "icon": "memory",
+        "id": "variant_1787020576063",
+        "name": "NVIDIA GeForce RTX 3060 Laptop GPU"
+      }
+    ],
+    "processSort": "vram",
+    "popoutStyle": "default",
+    "updateInterval": "4000",
+    "processListHeight": "250"
+  },
+  "amdGpuMonitor": {
+    "enabled": true,
+    "variants": [
+      {
+        "gpuPci": "0000:06:00.0",
+        "gpuType": "APU",
+        "originalName": "AMD Radeon 680M",
+        "description": "Monitor your integrated AMD Radeon 680M",
+        "icon": "memory",
+        "id": "variant_1786989457489",
+        "name": "AMD Radeon 680M"
+      }
+    ],
+    "updateInterval": "4000",
+    "processSort": "vram"
   }
 }

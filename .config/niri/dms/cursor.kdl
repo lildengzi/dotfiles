@@ -5,5 +5,5 @@
 
 cursor {
     xcursor-theme "Adwaita"
-    xcursor-size 26
+    xcursor-size 24
 }
